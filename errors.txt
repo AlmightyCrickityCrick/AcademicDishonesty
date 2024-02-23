@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/minigame_script.rpy", line 5: 'show' is not a keyword argument or valid child of the screen statement.
+    show bg corridor
+        ^
+
+Ren'Py Version: Ren'Py 8.2.0.24012702
+Fri Feb 23 14:15:19 2024
