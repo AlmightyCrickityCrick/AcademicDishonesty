@@ -1,16 +1,22 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/minigame_script.rpy", line 75, in script
+  File "game/minigame_script.rpy", line 206, in script
     call screen stealth_minigame
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-AttributeError: 'str' object has no attribute 'visit_all'
+  File "game/minigame_script.rpy", line 170, in render
+    x = self.guard.render(width, height, st, at)
+  File "game/minigame_script.rpy", line 126, in render
+    self.move()
+  File "game/minigame_script.rpy", line 96, in move
+    self.xdir = 1 if(x > self.xpos) else -1
+NameError: name 'x' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/minigame_script.rpy", line 75, in script
+  File "game/minigame_script.rpy", line 206, in script
     call screen stealth_minigame
   File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\ast.py", line 1968, in execute
     self.call("execute")
@@ -26,23 +32,41 @@ Full traceback:
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 2683, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\screen.py", line 485, in visit_all
-    self.child.visit_all(callback, seen=None)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-AttributeError: 'str' object has no attribute 'visit_all'
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 2814, in interact_core
+    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 1352, in draw_screen
+    surftree = renpy.display.render.render_screen(
+  File "render.pyx", line 486, in renpy.display.render.render_screen
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\screen.py", line 754, in render
+    child = renpy.display.render.render(self.child, w, h, st, at)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "game/minigame_script.rpy", line 170, in render
+    x = self.guard.render(width, height, st, at)
+  File "game/minigame_script.rpy", line 126, in render
+    self.move()
+  File "game/minigame_script.rpy", line 96, in move
+    self.xdir = 1 if(x > self.xpos) else -1
+NameError: name 'x' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.0.24012702
 AcademicDishonesty 1.0
-Fri Feb 23 17:56:19 2024
+Fri Feb 23 20:58:59 2024
