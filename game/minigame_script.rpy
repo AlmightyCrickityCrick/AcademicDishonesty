@@ -151,6 +151,7 @@ init python:
             self.guard = GuardSprite()
             self.mc = PlayableSprite("main", 500, 50)
             self.companion = PlayableSprite("companion", 20, 80)
+            self.test = Solid("#000", xsize=128, ysize=128)
 
             self.guard.observe(self.mc)
             self.guard.observe(self.companion)
@@ -160,13 +161,17 @@ init python:
         
         def render(self, width, height, st, at):
             r = renpy.Render(self.render_size[0], self.render_size[1])
-            for x in range(8):
+            for x in range(len(self.object_sprites)):
                 o_loc = self.object_locations[x]
                 o_sprite = self.object_sprites[x]
                 pi = renpy.render(o_sprite, 20, 20, st, at)
                 r.blit(pi, (o_loc[1], o_loc[2]))
             
             #Trigger rending for the sprites
+            x = renpy.render(self.test, 20, 20, st, at)
+            r.blit(x, (10, 10))
+
+
             x = self.guard.render(width, height, st, at)
             r.blit(x, (self.guard.xpos, self.guard.ypos))
 
@@ -190,13 +195,20 @@ init python:
         def visit(self):
             child_list = self.object_sprites
             return child_list
-
+        
+        # Need some proper level design for this thing because random sucks
         def object_reset(self):
             object_img = ["minigame_assets/plant.png", "minigame_assets/trashcan.png", "minigame_assets/sofa.png", "minigame_assets/vending_machine.png"]
             self.object_locations = []
+            xpositions = list(range(10, self.render_size[0] - 200 , 50))
+            ypositions = list(range(10, self.render_size[1] - 200, 50))
 
-            for i in range(8):
-                self.object_locations.append((random.choice(object_img), random.randint(1, 80) * 10, random.randint(10, 100) * 10))
+
+            while len(self.object_locations) < 15:
+                new_space =  (random.choice(xpositions), random.choice(ypositions))
+                xpositions.remove(new_space[0])
+                ypositions.remove(new_space[1])
+                self.object_locations.append((random.choice(object_img), new_space[0], new_space[1]))
 
 
 

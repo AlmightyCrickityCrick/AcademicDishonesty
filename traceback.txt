@@ -1,22 +1,18 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/minigame_script.rpy", line 206, in script
+  File "game/minigame_script.rpy", line 217, in script
     call screen stealth_minigame
   File "renpy/common/000statements.rpy", line 671, in execute_call_screen
     store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/minigame_script.rpy", line 170, in render
-    x = self.guard.render(width, height, st, at)
-  File "game/minigame_script.rpy", line 126, in render
-    self.move()
-  File "game/minigame_script.rpy", line 96, in move
-    self.xdir = 1 if(x > self.xpos) else -1
-NameError: name 'x' is not defined
+  File "game/minigame_script.rpy", line 164, in render
+    for x in range(len(object_sprites)):
+NameError: name 'object_sprites' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/minigame_script.rpy", line 206, in script
+  File "game/minigame_script.rpy", line 217, in script
     call screen stealth_minigame
   File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\ast.py", line 1968, in execute
     self.call("execute")
@@ -58,15 +54,11 @@ Full traceback:
     surf = render(child, width, height, cst, cat)
   File "render.pyx", line 170, in renpy.display.render.render
   File "render.pyx", line 260, in renpy.display.render.render
-  File "game/minigame_script.rpy", line 170, in render
-    x = self.guard.render(width, height, st, at)
-  File "game/minigame_script.rpy", line 126, in render
-    self.move()
-  File "game/minigame_script.rpy", line 96, in move
-    self.xdir = 1 if(x > self.xpos) else -1
-NameError: name 'x' is not defined
+  File "game/minigame_script.rpy", line 164, in render
+    for x in range(len(object_sprites)):
+NameError: name 'object_sprites' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.0.24012702
 AcademicDishonesty 1.0
-Fri Feb 23 20:58:59 2024
+Fri Feb 23 21:31:32 2024
