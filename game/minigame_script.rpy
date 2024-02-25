@@ -13,12 +13,28 @@ init python:
         def __init__(self, chara_type, xpos, ypos, **properties):
             super(PlayableSprite, self).__init__(**properties)
             self.chara_type = chara_type
-            self.img = "minigame_assets/companion.png" if(self.chara_type == "companion") else "minigame_assets/main_character.png"
+            if(self.chara_type == "companion"):
+                self.img = "minigame_assets/companion.png"
+                self.up_key = pygame.locals.K_UP
+                self.left_key = pygame.locals.K_LEFT
+                self.down_key = pygame.locals.K_DOWN
+                self.right_key = pygame.locals.K_RIGHT
+                self.flash_key = pygame.locals.K_q
+            else:
+                self.img ="minigame_assets/main_character.png"
+                self.up_key = pygame.locals.K_w
+                self.left_key = pygame.locals.K_a
+                self.down_key =pygame.locals.K_s
+                self.right_key = pygame.locals.K_d
+                self.flash_key = pygame.locals.K_e
+
 
             self.sprite = Transform(self.img)
 
             self.xpos = xpos
             self.ypos = ypos
+
+            self.is_flashing = False
 
             self.render_size = (1920, 1080)
                 
@@ -31,33 +47,37 @@ init python:
 
         
         def event(self, ev, x, y, st):
-            if (self.chara_type == "companion"):
-                self.handle_companion_event(ev, x, y, st)
-            else:
-                self.handle_self_event(ev, x, y, st)
-        
-        def handle_companion_event(self, ev, x, y, st):
-            if(ev.key == pygame.locals.K_RIGHT):
-                self.xpos += 5
-            elif(ev.key == pygame.locals.K_LEFT):
-                self.xpos -= 5
-            elif(ev.key == pygame.locals.K_UP):
-                self.ypos -= 5
-            elif(ev.key == pygame.locals.K_DOWN):
-                self.ypos += 5
-        
-        def handle_self_event(self, ev, x, y, st):
-            if(ev.key == pygame.locals.K_d):
-                self.xpos += 5
-            elif(ev.key == pygame.locals.K_a):
-                self.xpos -= 5
-            elif(ev.key == pygame.locals.K_w):
-                self.ypos -= 5
-            elif(ev.key == pygame.locals.K_s):
-                self.ypos += 5
-            
-            self.observer.notify_obs("sound", self.xpos, self.ypos)
+            if (ev.key in [self.right_key, self.left_key, self.up_key, self.down_key]):
+                self.observer.notify_obs("sound", self.xpos, self.ypos)
 
+            if(ev.key == self.right_key):
+                self.xpos += 10
+            elif(ev.key == self.left_key):
+                self.xpos -= 10
+            elif(ev.key == self.up_key):
+                self.ypos -= 10
+            elif(ev.key == self.down_key):
+                self.ypos += 10
+            elif(ev.key == self.down_key):
+                self.ypos += 10
+            elif(ev.key == self.flash_key):
+                self.is_flashing = not self.is_flashing
+                self.change_sprite_state(self.is_flashing)
+            
+            if (self.is_flashing):
+                self.observer.notify_obs("light", self.xpos, self.ypos)
+            
+        
+        def change_sprite_state(self, flash):
+            if (flash):
+                self.sprite = Composite((256, 256), (150, 0), "minigame_assets/flashlight_aura.png", (0, 0), self.img)
+            else:
+                self.sprite = Transform(self.img)
+
+
+
+
+            
 
 
     class GuardSprite(renpy.Displayable):
@@ -75,15 +95,19 @@ init python:
             self.sprite = Transform("minigame_assets/guard.png")
 
             self.render_size = (80, 80)
-                
-        def vision_cone(self):
-            pass
+            self.game_over = False
 
-        def sound_cone(self):
-            pass
-
-        def catch_cone(self):
-            pass
+        # Flashlight trigger   
+        def vision_cone(self, x, y):
+            return x in range(self.xpos - 500, self.xpos + 500) and y in range(self.ypos - 500, self.ypos + 500)
+        
+        # Step sounds trigger
+        def sound_cone(self, x, y):
+            return x in range(self.xpos - 200, self.xpos + 200) and y in range(self.ypos - 200, self.ypos + 200)
+        
+        # Catching
+        def catch_cone(self, x, y):
+            return x in range(self.xpos - 100, self.xpos + 100) and y in range(self.ypos - 100, self.ypos + 100)
         
         def move(self):
             if self.state == "static":
@@ -118,9 +142,16 @@ init python:
             playable.attach_observer(self)
         
         def notify_obs(self, n_type , x, y):
-            self.state = "alert"
-            self.trigger_posx = x
-            self.trigger_posy = y
+            if((self.catch_cone(x, y))):
+                self.game_over = True
+                renpy.timeout(0)
+
+
+            if ((n_type == "light" and self.vision_cone(x, y)) or ((n_type == "sound" and self.sound_cone(x, y)))):
+                self.state = "alert"
+                self.trigger_posx = x
+                self.trigger_posy = y
+            
 
         def render(self, width, height, st, at):
             self.move()
@@ -140,7 +171,7 @@ init python:
             self.render_size = (1920, 1080)
 
             # Setting up coordinates of objects and sprites
-            self.finish_x = 1000
+            self.finish_x = 1600
             self.finish_y = 540
 
             self.object_reset()
@@ -151,7 +182,7 @@ init python:
             self.guard = GuardSprite()
             self.mc = PlayableSprite("main", 500, 50)
             self.companion = PlayableSprite("companion", 20, 80)
-            self.test = Solid("#000", xsize=128, ysize=128)
+            self.finish_line = Image("minigame_assets/destination.png")
 
             self.guard.observe(self.mc)
             self.guard.observe(self.companion)
@@ -168,8 +199,8 @@ init python:
                 r.blit(pi, (o_loc[1], o_loc[2]))
             
             #Trigger rending for the sprites
-            x = renpy.render(self.test, 20, 20, st, at)
-            r.blit(x, (10, 10))
+            x = renpy.render(self.finish_line, width, height, st, at)
+            r.blit(x, (self.finish_x, self.finish_y))
 
 
             x = self.guard.render(width, height, st, at)
@@ -182,6 +213,10 @@ init python:
             r.blit(x, (self.companion.xpos, self.companion.ypos))
 
             renpy.redraw(self, 0)
+
+            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
+                renpy.timeout(0)
+
             return r
 
         
@@ -189,6 +224,12 @@ init python:
             if ev.type == pygame.KEYDOWN:
                 self.mc.event(ev, x, y, st)
                 self.companion.event(ev, x, y, st)
+            
+            if self.guard.game_over:
+                return "you lost"
+
+            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
+                return "you won"
             
 
         
@@ -215,8 +256,19 @@ init python:
 label minigame():
 
     e "Hello"
+    window hide 
+    $ quick_menu = False
+
     call screen stealth_minigame
     
+    $ quick_menu = True
+    window show
+
+    if _return == "you lost":
+        dark "Game Over"
+    elif _return == "you won":
+        dark "Yay!"
+
     return 
 
 screen stealth_minigame():

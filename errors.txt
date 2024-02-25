@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/minigame_script.rpy", line 92: 'tuple' is an illegal expression for augmented assignment
-                self.xpos, self.ypos += self.random_move()
-                 ^
+File "game/minigame_script.rpy", line 219: expected an indented block
+            return r
+             ^
 
 Ren'Py Version: Ren'Py 8.2.0.24012702
-Fri Feb 23 20:55:30 2024
+Sun Feb 25 20:04:18 2024
