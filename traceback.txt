@@ -1,64 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/minigame_script.rpy", line 217, in script
-    call screen stealth_minigame
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/minigame_script.rpy", line 164, in render
-    for x in range(len(object_sprites)):
-NameError: name 'object_sprites' is not defined
+  File "game/prolog.rpy", line 16, in script
+    show laptop zoom 2 at charcenter  with fade
+Exception: Image 'laptop' does not accept attributes 'zoom 2'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/minigame_script.rpy", line 217, in script
-    call screen stealth_minigame
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\ast.py", line 1968, in execute
-    self.call("execute")
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\ast.py", line 1950, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\statements.py", line 349, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\exports.py", line 3413, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 2165, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 2814, in interact_core
-    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\core.py", line 1352, in draw_screen
-    surftree = renpy.display.render.render_screen(
-  File "render.pyx", line 486, in renpy.display.render.render_screen
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\screen.py", line 754, in render
-    child = renpy.display.render.render(self.child, w, h, st, at)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "C:\Users\s02li\Downloads\renpy-8.2.0-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "game/minigame_script.rpy", line 164, in render
-    for x in range(len(object_sprites)):
-NameError: name 'object_sprites' is not defined
+  File "game/prolog.rpy", line 16, in script
+    show laptop zoom 2 at charcenter  with fade
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/ast.py", line 1113, in execute
+    show_imspec(self.imspec, atl=getattr(self, "atl", None))
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/ast.py", line 1076, in show_imspec
+    renpy.config.show(name,
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/exports.py", line 739, in show
+    if not base.find_target() and renpy.config.missing_show:
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/display/image.py", line 421, in find_target
+    self.target = target._duplicate(a)
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/display/displayable.py", line 246, in _duplicate
+    args.extraneous()
+  File "/home/irina/UTM/SEM8/FDJ/renpy-8.2.0-sdk/renpy/display/displayable.py", line 109, in extraneous
+    raise Exception("Image '{}' does not accept attributes '{}'.".format(
+Exception: Image 'laptop' does not accept attributes 'zoom 2'.
 
-Windows-10-10.0.22631 AMD64
+Linux-5.15.0-91-generic-x86_64-with-glibc2.35 x86_64
 Ren'Py 8.2.0.24012702
 AcademicDishonesty 1.0
-Fri Feb 23 21:31:32 2024
+Sun Feb 25 20:16:07 2024
