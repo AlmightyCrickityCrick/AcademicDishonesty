@@ -3,6 +3,7 @@ define mc = Character("Me")
 
 label start:
 
-    jump privileges_used_for_evil
+    # jump arriving_to_the_exam
+    jump cabinet_exploration
 
     return
