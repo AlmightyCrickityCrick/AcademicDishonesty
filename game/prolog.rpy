@@ -1,6 +1,6 @@
 
 define mc = Character("Me", color="#c8ffc8")
-define Bostan = Character("Professor Bostan", color="#1675c2", image="viorel")
+define Bostan = Character("Professor Bostan", color="#1675c2", image="characters/viorel")
 image laptop = "prolog/laptop.png"
 image openBinder = "prolog/binder.png"
 image test = "prolog/test.png"
