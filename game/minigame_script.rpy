@@ -9,6 +9,15 @@ init python:
     import pygame
     import math
 
+    object_borders = []
+
+    def check_collision(x, y):
+        for ob in object_borders: #(x0, y0, x1, y1) tuple
+            if ((x >= ob[0] and x<= ob[2])) and (y >= ob[1] and y<= ob[3]):
+                return True
+        return False
+
+
     class PlayableSprite(renpy.Displayable):
         def __init__(self, chara_type, xpos, ypos, **properties):
             super(PlayableSprite, self).__init__(**properties)
@@ -51,15 +60,13 @@ init python:
                 self.observer.notify_obs("sound", self.xpos, self.ypos)
 
             if(ev.key == self.right_key):
-                self.xpos += 10
+                self.xpos += 10 if (not check_collision(self.xpos + 10, self.ypos)) else 0
             elif(ev.key == self.left_key):
-                self.xpos -= 10
+                self.xpos -= 10 if (not check_collision(self.xpos - 10, self.ypos)) else 0
             elif(ev.key == self.up_key):
-                self.ypos -= 10
+                self.ypos -= 10 if (not check_collision(self.xpos, self.ypos - 10)) else 0
             elif(ev.key == self.down_key):
-                self.ypos += 10
-            elif(ev.key == self.down_key):
-                self.ypos += 10
+                self.ypos += 10 if (not check_collision(self.xpos, self.ypos + 10)) else 0
             elif(ev.key == self.flash_key):
                 self.is_flashing = not self.is_flashing
                 self.change_sprite_state(self.is_flashing)
@@ -125,10 +132,10 @@ init python:
                     self.trigger_posx = None
                     self.trigger_posy = None
                 
-                if(self.xpos != self.trigger_posx):
+                if(self.xpos != self.trigger_posx and not check_collision(self.xpos + (self.xdir * self.investigation_speed), self.ypos)):
                     self.xpos += self.xdir * self.investigation_speed
 
-                if (self.ypos != self.trigger_posy):
+                if (self.ypos != self.trigger_posy and not check_collision(self.xpos, self.ypos + (self.ydir * self.investigation_speed))):
                     self.ypos += self.ydir * self.investigation_speed
                 
 
@@ -177,7 +184,8 @@ init python:
             self.object_reset()
             self.object_sprites = []
             for x in self.object_locations:
-                self.object_sprites.append(Image(x[0], xsize= self.object_width, ysize = self.object_height))
+                # self.object_sprites.append(Image(x[0], xsize= self.object_width, ysize = self.object_height))
+                self.object_sprites.append(Composite((256, 256), (0, 0), x[0], (0, 0), "minigame_assets/destination.png"))
             
             self.guard = GuardSprite()
             self.mc = PlayableSprite("main", 500, 50)
@@ -192,11 +200,18 @@ init python:
         
         def render(self, width, height, st, at):
             r = renpy.Render(self.render_size[0], self.render_size[1])
+            
+            for i in object_borders:
+                tmp = renpy.render(Solid("#f00", xsize= 100, ysize=100), 100, 100, st, at)
+                r.blit(tmp, (i[0], i[1]))
+            
             for x in range(len(self.object_sprites)):
                 o_loc = self.object_locations[x]
                 o_sprite = self.object_sprites[x]
                 pi = renpy.render(o_sprite, 20, 20, st, at)
                 r.blit(pi, (o_loc[1], o_loc[2]))
+                
+
             
             #Trigger rending for the sprites
             x = renpy.render(self.finish_line, width, height, st, at)
@@ -250,12 +265,12 @@ init python:
                 xpositions.remove(new_space[0])
                 ypositions.remove(new_space[1])
                 self.object_locations.append((random.choice(object_img), new_space[0], new_space[1]))
-
+                object_borders.append((new_space[0] - 70, new_space[1] - 200, new_space[0] + 70, new_space[1]))
 
 
 label minigame():
 
-    e "Hello"
+    dark "Hello"
     window hide 
     $ quick_menu = False
 
