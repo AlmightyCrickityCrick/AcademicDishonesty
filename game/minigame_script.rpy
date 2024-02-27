@@ -184,8 +184,8 @@ init python:
             self.object_reset()
             self.object_sprites = []
             for x in self.object_locations:
-                # self.object_sprites.append(Image(x[0], xsize= self.object_width, ysize = self.object_height))
-                self.object_sprites.append(Composite((256, 256), (0, 0), x[0], (0, 0), "minigame_assets/destination.png"))
+                self.object_sprites.append(Image(x[0], xsize= self.object_width, ysize = self.object_height))
+                # self.object_sprites.append(Composite((256, 256), (0, 0), x[0], (0, 0), "minigame_assets/destination.png"))
             
             self.guard = GuardSprite()
             self.mc = PlayableSprite("main", 500, 50)
@@ -201,9 +201,6 @@ init python:
         def render(self, width, height, st, at):
             r = renpy.Render(self.render_size[0], self.render_size[1])
             
-            for i in object_borders:
-                tmp = renpy.render(Solid("#f00", xsize= 100, ysize=100), 100, 100, st, at)
-                r.blit(tmp, (i[0], i[1]))
             
             for x in range(len(self.object_sprites)):
                 o_loc = self.object_locations[x]
