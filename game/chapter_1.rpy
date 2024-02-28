@@ -1,7 +1,16 @@
 define mc = Character("Me", color="#c8ffc8")
 define Viorel = Character("Viorel", color="#674ea7", image="characters/viorel.png")
-define surprised_David = Character("Surprised David", color="#f1c233", image="characters/David.png")
+define surprised_David = Character("David", color="#f1c233", image="characters/David.png")
+define sad_David = Character("David", color="#f1c232", image="characters/Sad_David_png.png")
 define David = Character("David", color="#f1c232", image="characters/Surprised_David.png")
+define serious_David = Character("David", color="#f1c232", image="characters/Serious_David.png")
+define Marius = Character("Marius", color="#e97782", image="characters/Marius.png")
+define amused_marius = Character("Marius", color="#e97782", image="characters/amused_Marius.png")
+define Ana = Character("Ana", color="#d5a6bd", image="characters/Ana.png")
+define Maria = Character("Maria", color="#b4a7d6", image="characters/Maria.png")
+define unhappy_Maria = Character("Maria", color="#b4a7d6", image="characters/Unhappy_Maria.png")
+define Alex = Character("Alex", color="#38761d", image="characters/Alex.png")
+define Theodora = Character("Theodora", color="#0b5394", image="characters/Theodora.png")
 define Guard = Character("Guard", color="#ae1717", image="characters/Guard.png")
 define Unknown = Character("Unknown", color="#5b5b5b")
 image dueffel_bag = "chapter_1/Dueffel_Bag.png"
@@ -10,8 +19,11 @@ image flashlight = "chapter_1/Flashlight.png"
 image smartphone = "chapter_1/Smartphone.png"
 image teacher_id = "chapter_1/Teacher_ID.png"
 image keychain = "chapter_1/Keychain.png"
+image folded_paper = "chapter_1/Folded_paper.png"
 
 define affection = 0
+define met_david = False
+define met_marius = False
 
 label breaking_and_entering:
 
@@ -210,18 +222,17 @@ label cabinet_exploration:
             "And they were getting closer by the second. I had to make a quick decision."
 
             menu:
-                # TO DO
                 "Hide under the desk":
 
-                    "To be added"
+                    jump under_desk
 
                 "Hide in the closet":
 
-                    "To be added"
+                    jump hidden_closet
 
                 "Hide in the adjacent room":
 
-                    "To be added"
+                    jump rommates
             
             "To be added"
             
@@ -302,7 +313,7 @@ label under_desk:
 
     scene bg under_desk_view
 
-    #TO DO
+    jump regroup
 
 label hidden_closet:
 
@@ -326,6 +337,8 @@ label hidden_closet:
     "I whipped my head to the side."
 
     scene bg closet
+
+    $ met_david = True
 
     show surprised_david at pos with dissolve
 
@@ -465,9 +478,548 @@ label hidden_closet:
 
             "A few other doors opened."
 
+            hide david
+        
+    jump regroup
+
+
+label roommates:
+
+    scene bg classroom_101_night_panic
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+
+    "I dove into the adjacent room, opening the door widely and remembering only a second later that it bangs loudly when it closes."
+
+    "Oh, no!"
+
+    "I was halfway through the beginning of a heart attack, when the door stopped just a sliver away from the frame."
+
+    mc "Huh?"
+
+    scene bg door_crack
+
+    "I came closer to the opening just as a large, brutish man entered the classroom, followed by a smaller student, but I didn’t pay them any mind, too focused on the door anomaly."
+
+    show folded_paper at pos with dissolve
+
+    "I crouched to look closer at what appeared to be a small paper, folded a few times, propping the heavy wood, when I felt a weird breeze against my ear."
+
+    hide folded_paper
+
+    Unknown "Booo!"
+
+    scene bg adjacent_room
+
+    "I nearly jumped out of the door and right back into the classroom when a hand grabbed my arm and pulled me back and further into the room, accompanied by a barely heard chuckle."
+
+    "I turned my head to look at the unexpected companion and froze like a deer in the headlights. I swore that if it continued like that I'll get gray by twenty five."
+
+    $ met_marius = True
+    
+    show amused_marius at pos with dissolve
+
+    "The visitor was, fortunately, a student. With black hair and dark clothing he blended pretty well with the shadows of the room, if not for the paleness of his face and white of his smile."
+
+    Marius "Sorry. Didn't think I'd scare you this hard."
+
+    "The ghost guy patted my arm before finally letting go. He didn't look sorry."
+
+    menu:
+        "Be rude":
+
+            $ affection -= 1
+
+            mc "What the hell was that? Have you lost your mind? There's a guard on the other side of the door!"
+
+            "The guy continued to smile, but his eyes darkened a bit at my words."
+
+            Marius "Yeah, yeah. Spare me the lecture. Let's consider it a lesson for the both of us, shall we? For me about scaring people. For you about staying vigilant."
+
+            "He proposed courteously, before shuffling closer to the door to peek through the crack."
+
+            "I grumbled but decided to drop it."
+        
+        "Keep calm":
+
+            $affection += 1
+
+            "Annoyance won't help in this situation."
+
+            mc "No offense, dude, but that could have ended really badly for the both of us"
+
+            "The guy didn't stop smiling, but I did see a shadow of remorse cross his face, before he apologized once more, properly."
+
+            hide amused_marius
+
+            show marius at pos with dissolve
+
+            Marius "“I know. And I really am sorry about that. It was childish and unasked for."
+
+            "He shuffled closer towards the door to peek through the crack."
+
+            "I grumbled but decided to drop it and came closer to him, to look over his head. The student and the guard were speaking 
+            about something, but I couldn't hear them properly from here."
+
+            hide marius
+    
+    jump regroup
+
+label regroup:
+
+    scene bg classroom_101_night
+
+    "I froze as people streamed into the room, some speaking quietly, others on the verge of arguing. Four in total, but judging by their attitude, they were not a single group."
+
+    if met_david:
+        jump david_and_friends
+    elif met_marius:
+        jump marius_and_friends
+    else:
+        jump single_to_mingle
+    # TO DO
+
+    "How were we going to break into Professor Bostan's cabinet?"
+    # TO DO
+
+label single_to_mingle:
+
+    scene bg classroom_101_night
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+    $pos_left = Position(xpos=0.25, xanchor=0.25, ypos=0.5, yanchor=0.5)
+    $pos_right = Position(xpos=0.65, xanchor=0.65, ypos=0.5, yanchor=0.5)
+
+    "I watched as the four separated as predicted, with two approaching a light haired guy with slippers that exited out of a closet, looking pretty shaken." 
+    
+    "As the others headed to the back of the classroom, straight to another guy, who came out of the adjacent room."
+
+    "Tall. Dark hair. Dressed in black, inconspicuous attire, more like someone you’d expect to break into the university. No slippers."
+
+    "I stood like a statue while they caught up with whatever they had to, before the guy with the dark hair took notice of me and separated from his group with a light smile."
+
+    Unknown "Oho? We got unexpected company?"
+
+    show amused_marius at pos with dissolve
+
+    Marius "I'm Marius, first year, from biotech. Can I assume that you're here for the Math Analysis exam?"
+
+    "I looked slightly stuppored at his hand, before looking around the room once more and frowning. Did everyone here flunk the exam and decide to commit crimes?"
+
+    mc "... First year, software engineering."
+
+    "I introduced myself and shook his hand, before noticing that I haven't answered his question."
+
+    mc "I assume you also failed?"
+
+    hide amused_marius
+
+    show marius at pos with dissolve:
+        zoom 0.85
+
+    Marius "No, just woke up from a nap and chose to take a walk through uni."
+
+    Unknown "You know you don't have to throw a jab at David every five minutes, Marius?"
+
+    hide marius
+
+    "I turned around to find myself face to face with two strikingly similar girls in both clothes, as well as in face. Twins?"
+
+    show ana at pos_left:
+        zoom 0.55 
+
+    show maria at pos_right:
+        zoom 0.6
+    
+    Maria "I'm Maria, by the way. Nice to meet you!"
+
+    Maria "This is my sister, Ana, and our friend, David. From IA and biotech."
+
+    "She resumed her hostile stance towards Marius."
+
+    hide ana
+
+    hide maria
+
+    show marius at pos with dissolve:
+        zoom 0.85
+
+    Marius "Well, I wouldn't be 'jabbing' anyone if we haven't gotten into this situation because of him in the first place."
+
+    hide marius
+
+    show sad_david at pos with dissolve
+
+    "I watched with a puzzled expression as David tried to make himself look smaller from the scrutiny. Wherever he did or didn't do what 
+    they were talking about, he looked guilty."
+
+    hide sad_david
+
+    show maria at pos with dissolve:
+        zoom 0.85
+
+    Maria "Well it doesn't matter. What's done is done. At least we got the flashlight back, and no one else was caught beside Viorel"
+
+    hide maria
+
+    "Maria stood her position while the David guy mumbled something about the chosen one never being caught from behind her before stopping dead in his tracks."
+
+    "He frantically patted his jean pockets, before bolting towards where the bag was now gone."
+
+
+    call light_group_conflicts
+
+    show alex at pos_left:
+        zoom 0.65
+
+    show theodora at pos_right:
+        zoom 0.6
+
+    Marius "Those are Alex and Theodora. Alex is from AI, like the twins here. Theo from Informational Technology. And you are?"
+
+    "I gave him and his group a once over."
+
+    "The Theodora girl seemed friendly enough, although detached, while the Alex guy seemed quite similar to David, fidgeting with the buttons of his shirt. But instead 
+    of nervousness, it was energy that seemed to sip out of his pores."
+
+    menu: 
+        "Shake hands":
+
+            "I shook their hand and exchanged pleasantries once again with the other group, before the flashlight incident was forgotten and we moved to the actual topic at hand."
+
+    hide alex
+
+    hide theodora
+
+    return
+
+
+label david_and_friends:
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+    $pos_left = Position(xpos=0.25, xanchor=0.25, ypos=0.5, yanchor=0.5)
+    $pos_right = Position(xpos=0.65, xanchor=0.65, ypos=0.5, yanchor=0.5)
+
+    scene bg classroom_101_night
+
+    "I watched as the four separated as predicted, with two approaching me and David and the others heading to the back of the classroom, straight to another guy, who came out of the 
+    adjacent room."
+
+    "Tall. Dark hair. Dressed in black, inconspicuous attire, more like someone you'd expect to break into the university. No slippers."
+
+    "He exchanged a few words with them, before catching my eyes and throwing a charming smile."
+
+    show david at pos with dissolve
+
+    David "So… those were the friends I was speaking about, Ana and Maria, from Automatics and Informatics."
+
+    hide david
+
+    "I gave a small wave to both of them, as I introduced myself, and looked them over."
+
+    show ana at pos_left:
+        zoom 0.55 
+
+    show maria at pos_right:
+        zoom 0.6
+    
+    "Both had really similar faces and the fact that they opted for clothing similar to almost everyone else, didn't help distinguish them. Not only that, but also the frowns they wore 
+    were also strikingly similar."
+
+    Ana "Thank God you weren't caught. I almost had a heart attack when I saw Viorel come back with the guard in tow into the classroom."
+
+    "The one with slightly shorter hair said to him, before turning to me."
+
+    Ana "I'm Ana by the way. This here is my sister, Maria."
+
+    "The second girl reached out her hand, and I gently shook it, before giving David a light, but annoyed, slap on the shoulder."
+
+    Maria "We told you to go straight to the bathrooms once you retrieve the flashlight. What if Viorel had been caught a minute earlier?"
+
+    "David mumbled something about the chosen one never being caught before stopping in his tracks."
+
+    "He frantically patted his jean pockets, before frantically running towards where the bag was now gone."
+
+    hide maria
+
+    hide ana
+
+    call light_group_conflicts
+
+    "However, the second he looked into my direction, he sighed and lightened his expression."
+
+    show marius at pos with dissolve
+
+    Marius "I'm Marius, from bioengineering. And those are Alex and Theodora."
+
+    Marius "Alex is from AI, like the twins here. Theo from Informational Technology. And you are?"
+
+    hide marius
+
+    show alex at pos_left:
+        zoom 0.65
+
+    show theodora at pos_right:
+        zoom 0.6
+    
+    "I gave him and his group a once over. The Theodora girl seemed friendly enough, although detached, while the Alex guy seemed quite similar to David, 
+    fidgeting with the buttons of his shirt."
+
+    "But instead of nervousness, it was energy that seemed to sip out of his pores."
+
+    hide alex
+
+    hide theodora
+
+    menu: 
+        "Shake hands":
+
+            show marius at pos with dissolve
+
+            "I shook Marius's hand and exchanged pleasantries once again with the other group, before we moved to the actual topic at hand."
+
+            hide marius
+    
+    return
+
+
+label marius_and_friends:
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+    $pos_left = Position(xpos=0.25, xanchor=0.25, ypos=0.5, yanchor=0.5)
+    $pos_right = Position(xpos=0.65, xanchor=0.65, ypos=0.5, yanchor=0.5)
+
+    scene bg classroom_101_night
+
+    "I watched as the four separated as predicted, with two approaching a light haired guy with slippers that exited out of a closet, looking pretty shaken, 
+    as the others headed to the back of the classroom, straight to me and Marius."
+
+    "Marius greeted the girl and the guy sunnily before turning to acquaint us."
+
+    show alex at pos_left:
+        zoom 0.65
+
+    show theodora at pos_right:
+        zoom 0.6
+
+    Marius "Marius greeted the girl and the guy sunnily before turning to acquaint us. “Those are Alex and Theodora. Alex is from AI. Theo from Informational Technology."
+
+    "I gave him and his group a once over. The Theodora girl seemed friendly enough, although detached, while the Alex guy seemed to exude energy, as if he were high on sugar."
+
+    Theodora "Honestly, I'm kind of starting to regret this entire spectacle!"
+
+    Theodora "It was supposed to be just a pop in and pop out operation, and yet here we are, going back and forth."
+
+    hide theodora
+
+    hide alex
+
+    show marius at pos with dissolve
+
+    Marius "Relax~"
+
+    Marius "It's an experience. Plus, we'll work this stuff out soon enough, change the tests, and then all go back home. Just a little bit longer..."
+
+    hide marius
+    
+    "Ah, so he was capable of  something other than sass. Good to know."
+
+    show alex at pos with dissolve:
+        zoom 0.8
+
+    Alex "Well we would have probably been home a while ago, if not for David."
+
+    hide alex
+
+    mc "I suppose you're also here for the exams?"
+
+    show marius at pos with dissolve
+
+    Marius "No, they just woke up from a nap and chose to take a walk through uni."
+
+    Unknown "You know you don't have to throw a jab at David every five minutes, Marius?"
+
+    hide marius
+
+    show ana at pos_left:
+        zoom 0.55 
+
+    show maria at pos_right:
+        zoom 0.6
+    
+    Maria "I'm Maria, by the way. Nice to meet you!"
+
+    Maria "This is my sister, Ana, and our friend, David. From IA and biotech."
+
+    "She resumed her hostile stance towards Marius."
+
+    hide ana
+
+    hide maria
+
+    show marius at pos with dissolve:
+        zoom 0.85
+
+    Marius "Well, I wouldn't be 'jabbing' anyone if we haven't gotten into this situation because of him in the first place."
+
+    hide marius
+
+    show sad_david at pos with dissolve
+
+    "I watched with a puzzled expression as David tried to make himself look smaller from the scrutiny. Wherever he did or didn't do what 
+    they were talking about, he looked guilty."
+
+    hide sad_david
+
+    show maria at pos with dissolve:
+        zoom 0.85
+
+    Maria "Well it doesn't matter. What's done is done. At least we got the flashlight back, and no one else was caught beside Viorel"
+
+    hide maria
+
+    "Maria stood her position while the David guy mumbled something about the chosen one never being caught from behind her before stopping dead in his tracks."
+
+    "He frantically patted his jean pockets, before bolting towards where the bag was now gone."
+
+    call light_group_conflicts
+
+    "It was about time we moved to the actual topic of the day at hand."
+
+    return     
 
 
 
+
+label light_group_conflicts:
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+
+    scene bg classroom_101_night
+
+    "He returned back, looking almost guilty."
+
+    show sad_david at pos with dissolve
+
+    David "I didn't get to take the flashlight. It's gone now."
+
+    hide sad_david
+
+    show maria at pos with dissolve:
+        zoom 0.85
+
+    Maria "What? You had one job, David. That's literally the only reason we came back here."
+
+    hide maria
+
+    show sad_david at pos with dissolve
+
+    David "I know, I know. Sorry!"
+
+    "He started fidgeting again with his bag."
+
+    David "But its fine, we'll manage without it. We'll find something else."
+
+    hide sad_david
+
+    menu:
+
+        "Share flashlight":
+
+            show flashlight at pos with dissolve
+
+            mc "I could lend you mine. I'm fine with sharing, it's not a problem."
+
+            hide flashlight
+
+            show serious_david at pos with dissolve
+
+            David "You would do that?"
+
+            hide serious_david
+
+            "David raised his hand to his chest, just as Ana threw her hands around me."
+
+            show ana at pos with dissolve:
+                zoom 0.7
+            
+            Ana "Thank you so much!"
+
+            Ana "We owe you. David is a bit ditzy, but he's not a bad guy. He'll grow on you once you get past the awkwardness."
+
+            hide ana
+
+            menu:
+
+                "Compliment David":
+
+                    $ affection += 1
+
+                    mc "He does seem pretty nice. And I've seen people a lot more awkward."
+
+                    show david at pos with dissolve
+
+                    "David looked towards the ceiling, embarrassed. Cute~"
+
+                    hide david
+
+                    show unhappy_maria at pos with dissolve
+
+                    "Maria gave me a look that I wasn't sure how to decipher."
+
+                    hide unhappy_maria
+
+                "Act annoyed":
+
+                    $ affection -= 1
+
+                    mc "Yeah, yeah!"
+
+                    show sad_david at pos with dissolve
+
+                    "David looked even more guilty, if possible, but I didn't pay him any mind. We had to move soon enough if we didn't want to get caught."
+
+                    hide sad_david
+            
+            show marius at pos with dissolve:
+                zoom 0.85
+            
+            if met_david:
+                Marius "Ah, so we do have a flashlight, courtesy to a newcomer."
+                "The guy from the adjacent room drawled, as he approached David's group, with a light step but a certain judgment in his expression."
+            else:
+                Marius "Well, would you look at that?"
+                
+                "Marius seemed to have lightened up a little after the exchange."
+                
+                Marius "Good to know we can at least count on our new mafia member to be prepared for this escapade."
+
+            "At least it seemed like it, before he threw one last dirty look towards David."
+
+            hide marius
+
+        "Don't share flashlight":
+
+            show marius at pos with dissolve:
+                zoom 0.85
+
+            if met_david:
+                
+                "Unsurprisingly for David, we not only have no flashlight, but we also lost a team member."
+
+                "The guy from the adjacent room drawled, as he approached David's group, while David tried to make himself smaller under his heavy glare."
+
+            else:
+
+                Marius "So, unsurprisingly for David, we not only have no flashlight, but we also lost a team member"
+
+                Marius "Seems like we'll have to find something else. Hope you're a more reliable partner-in crime."
+
+                "He turned back to me with a smile after throwing a last dirty look into David's direction."
+            
+            hide marius
+
+    return
 
 
 
