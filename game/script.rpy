@@ -7,6 +7,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump dangerous_maneuvre
-
+    jump problem_based_learning
     return

@@ -115,9 +115,9 @@ label bad_situations_require_bad_solutions:
     "It took me a second to remember the time Vasile left his phone in a locked cabinet."
 
     "I jumped at the possibility immediately."
-    Mc "Guys, we can use another method. I once had a colleague who forgot his phone in the nearby cabinet"
+    mc "Guys, we can use another method. I once had a colleague who forgot his phone in the nearby cabinet"
     "I traversed the room under their questioning gaze and got up on the sofa,"
-    Mc "There's a small ledge under the windows, if you're careful enough, you can use it to move from one cabinet to the others."
+    mc "There's a small ledge under the windows, if you're careful enough, you can use it to move from one cabinet to the others."
 
     show window at center with dissolve:
         xpos 950 
@@ -148,7 +148,7 @@ label bad_situations_require_bad_solutions:
         
 label dangerous_maneuvre:
     show rope at center with dissolve
-    Mc "Here, I said as I put a coil in his hand, and he started wrapping it around the metal bar next to the window,  Be careful not to fall there."
+    mc "Here, I said as I put a coil in his hand, and he started wrapping it around the metal bar next to the window,  Be careful not to fall there."
     hide rope
 
     show david at right with dissolve
@@ -180,7 +180,7 @@ label dangerous_maneuvre:
     menu:
         "Volunteer":
             $ d_affection = d_affection + 1
-            Mc "I'll do it,"
+            mc "I'll do it,"
             "I looked through the window, calculating the height if David did decide to take the plunge."
 
             show ana with dissolve:
@@ -195,7 +195,7 @@ label dangerous_maneuvre:
                 "No (see tutorial)":
                     jump tutorial_screen
                 "Yes (skip tutorial)":
-                    Mc "Yes, it's fine. We'll be back before you say Chebyshev,"
+                    mc "Yes, it's fine. We'll be back before you say Chebyshev,"
 
                     show theodora at right with dissolve
                     "Alright, then suit yourself,  Theodora shrugged." 
