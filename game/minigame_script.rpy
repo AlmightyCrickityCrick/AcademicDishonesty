@@ -2,6 +2,12 @@ define dark = Character("Darkness")
 
 init:
     image bg minigame = Frame("minigame_assets/bg minigame.png",  40, 40, 40, 40, tile=True)
+    image bg minigame tutorial = Image("minigame_assets/game_tutorial-transformed.png")
+    image bg minigame detail = Image("minigame_assets/minigame_decoration.png")
+    image bg tutorial = Image("minigame_assets/tutorial.png")
+    image bg end = Solid("#000", xsize=1200, ysize =500)
+
+
 
 
 init python:
@@ -101,7 +107,7 @@ init python:
             self.xdir =  None
             self.ydir = None
 
-            self.state = "idle" #idle, alert, static
+            self.state = "static" #idle, alert, static
             self.playable_dict = {}
             self.investigation_speed = 3
             self.following_character = None
@@ -126,12 +132,20 @@ init python:
         
         def move(self):
             if self.state == "static":
-                pass
-#TODO: SETUP Idle Routine for guards
+                self.ydir = random.choice([1, -1])
+                self.xdir = random.choice([1, -1])
+                self.state = "idle"
             elif self.state == "idle":
                 m = self.random_move()
-                self.xpos += m[0]
-                self.ypos += m[1]
+                if(self.xpos + m[0] * self.xdir > 100 and self.xpos + m[0] * self.xdir < 1800 and not check_collision(self.xpos + m[0] * self.xdir, self.ypos)):
+                    self.xpos += m[0] * self.xdir 
+                else:
+                    self.state = "static"
+
+                if(self.ypos + m[1] * self.ydir > 120 and self.ypos + m[1] * self.ydir < 700 and not check_collision(self.xpos, self.ypos + m[1] * self.ydir)):
+                    self.ypos += m[1] * self.ydir 
+                else:
+                    self.state = "static"
             else:
                 self.xdir = 1 if(self.trigger_posx > self.xpos) else -1
                 self.ydir = 1 if (self.trigger_posy > self.ypos) else -1
@@ -158,7 +172,7 @@ init python:
                     self.ypos += self.ydir * self.investigation_speed
                 
         def random_move(self):
-            return random.choice([-3, 3]), random.choice([-3, 3])
+            return random.choice([0, 1, 2, 3]), random.choice([0, 1, 2, 3])
 
         def observe(self, playable):
             self.playable_dict[playable.chara_type] = playable
@@ -200,6 +214,7 @@ init python:
             self.menu = Image("minigame_assets/top_bar.png")
             self.small_star_sprite = Image("minigame_assets/small_star.png")
             self.coin_sprite = Image("minigame_assets/coin.png")
+            self.eye_sprite = Image("minigame_assets/white_eye.png")
 
 
             # Setting up coordinates of where the guard has to be moved to finish the game (blue square)
@@ -245,11 +260,29 @@ init python:
             x = renpy.render(Text(str(self.coin_nr), size=26, color="#c23535"), width, height, st, at)
             r.blit(x, (710, 67))
 
+            self.setup_eye(r, width, height, st, at)
+            
+            #Renders Coin Nr
+            x = renpy.render(Text(str(self.coin_nr), size=26, color="#c23535"), width, height, st, at)
+            r.blit(x, (710, 67))
+
             #Renders Stars on Top Bar
             for i in range(self.stars_found):
                 x = renpy.render(self.small_star_sprite, width, height, st, at)
                 r.blit(x, (1200 + 50 * i, 62))
- 
+
+        def setup_eye(self, r, width, height, st, at):
+            if (self.guard.catch_cone(self.mc.xpos, self.mc.ypos) or self.guard.catch_cone(self.companion.xpos, self.companion.ypos)):
+                self.eye_sprite =  Image("minigame_assets/red_eye.png")
+            elif(self.guard.sound_cone(self.mc.xpos, self.mc.ypos) or self.guard.sound_cone(self.companion.xpos, self.companion.ypos)):
+                self.eye_sprite = Image("minigame_assets/yellow_eye.png")
+            else:
+                self.eye_sprite = Image("minigame_assets/white_eye.png")
+
+            #Renders eye
+            x = renpy.render(self.eye_sprite, width, height, st, at)
+            r.blit(x, (920, 65))
+        
         def render_game_zone(self, r, width, height, st, at):
             # Render of stars in game zone
             for i in self.star_locations.values():
@@ -263,12 +296,11 @@ init python:
                 pi = renpy.render(o_sprite, 20, 20, st, at)
                 r.blit(pi, (o_loc[1], o_loc[2]))
                 
-
-            
             #Trigger rending for the sprites:
             #Finish Line - Blue square
-            x = renpy.render(self.finish_line, width, height, st, at)
-            r.blit(x, (self.finish_x, self.finish_y))
+            if (self.stars_found >0):
+                x = renpy.render(self.finish_line, width, height, st, at)
+                r.blit(x, (self.finish_x, self.finish_y))
 
             #Guard
             x = self.guard.render(self.render_size[0], self.render_size[1], st, at)
@@ -357,37 +389,65 @@ init python:
                 self.star_locations[new_space] = ("minigame_assets/star.png", new_space[0], new_space[1])
 
 
-label minigame():
+label minigame(coin_nr=3, flashlight_nr=6):
 
-    call screen tutorial_screen()
     window hide 
     $ quick_menu = False
 
-    call screen stealth_minigame(3, 6)
-    
-    $ quick_menu = True
-    window show
+    call screen tutorial_screen()
+
+    call screen stealth_minigame(coin_nr, flashlight_nr)
 
     call screen ending_screen(_return)
 
-    if _return == "you lost":
-        dark "Game Over"
-    elif _return == "you won":
-        dark "Yay!"
+    $ quick_menu = True
+    window show
 
     return 
 
-# screen tutorial_screen():
+screen tutorial_screen():
+    add "bg minigame tutorial":
+        blur 5
 
-# screen ending_screen(condition):
+    vbox:
+        xalign 0.5 yalign 0.5
+        add "tutorial"
+        textbutton _("Start"):
+            xalign 0.5
+            action Return(True)
+    
+
+# The end will return True if the game was won or False if game was lost
+screen ending_screen(condition):
+    add "bg minigame tutorial"
+    add "bg end":
+        xalign 0.5
+        yalign 0.5
+    vbox:
+        xalign 0.5 yalign 0.5
+        if condition == "won":
+            text _("Congratulations, you won!")
+
+            textbutton _("Continue"):
+                action Return(True)
+        else:
+            text _("You lost! Would you like to try again?")
+            null height 50
+            textbutton _("Continue"):
+                xalign 0.5
+                action Return(False)
+            textbutton _("Retry"):
+                xalign 0.5
+                action Jump("minigame")
+
+        
 
 
 screen stealth_minigame(coin_nr, flashlight_nr):
     add "bg minigame"
+    add "bg minigame detail"
     default s_game = StealthGame(coin_nr, flashlight_nr)
     add s_game
-
-    text _("Yes")
     
 
 
