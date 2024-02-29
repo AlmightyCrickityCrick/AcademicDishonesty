@@ -193,11 +193,16 @@ init python:
 
 
     class StealthGame(renpy.Displayable):
-        def __init__(self, **properties):
+        def __init__(self, coin_nr, battery_nr, **properties):
             super(StealthGame, self).__init__(**properties)
+            #Game Size saved as variable
             self.render_size = (1920, 1080)
 
-            print('I am calling render')
+            #Upper Menu Objects
+            self.coin_nr = coin_nr
+            self.battery_nr = battery_nr
+            self.stars_found = 0
+
 
             # Setting up coordinates of where the guard has to be moved to finish the game (blue square)
             self.finish_x = 1600
@@ -217,16 +222,17 @@ init python:
             self.guard.observe(self.companion)
 
                 
-        
-        
-        def render(self, width, height, st, at):
-            r = renpy.Render(self.render_size[0], self.render_size[1])
+        def render_menu(self, r, width, height, st, at):
+            menu = Solid("#")
+            pass
+
+        def render_game_zone(self, r, width, height, st, at):
+            # Render of stars
+            for i in self.star_locations.values():
+                pi = renpy.render(i[0], 40, 40, st, at)
+                r.blit(pi, (i[1], i[2]))
             
-            
-            for i in object_borders:
-                pi = renpy.render(Solid("#00f", xsize = i[2] - i[0], ysize = i[3] - i[1]), 800, 600, st, at)
-                r.blit(pi, (i[0], i[1]))
-            
+            # Render of Game objects
             for x in range(len(self.object_sprites)):
                 o_loc = self.object_locations[x]
                 o_sprite = self.object_sprites[x]
@@ -235,22 +241,33 @@ init python:
                 
 
             
-            #Trigger rending for the sprites
+            #Trigger rending for the sprites:
+            #Finish Line - Blue square
             x = renpy.render(self.finish_line, width, height, st, at)
             r.blit(x, (self.finish_x, self.finish_y))
 
-
+            #Guard
             x = self.guard.render(self.render_size[0], self.render_size[1], st, at)
             r.blit(x, (self.guard.xpos, self.guard.ypos))
 
+            #MC
             x = self.mc.render(width, height, st, at)
             r.blit(x, (self.mc.xpos, self.mc.ypos))
 
+            #Companion
             x = self.companion.render(self.render_size[0], self.render_size[1], st, at)
             r.blit(x, (self.companion.xpos, self.companion.ypos))
 
+        
+        def render(self, width, height, st, at):
+            r = renpy.Render(self.render_size[0], self.render_size[1])
+            
+            self.render_menu(r, width, height, st, at)
+            self.render_game_zone(r, width, height, st, at)
+
             renpy.redraw(self, 0)
 
+            # Checks each render if the guard is at the finishing lane
             if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
                 renpy.timeout(0)
 
@@ -263,14 +280,30 @@ init python:
                 self.companion.event(ev, x, y, st)
             
             if self.guard.game_over:
-                return "you lost"
+                if self.coin_nr > 0:
+                    self.guard.game_over = False
+                    self.coin_nr -= 1
+                else:
+                    return "you lost"
 
-            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
+            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250 and self.stars_found > 1:
                 return "you won"
 
-            #TODO: Check if MC position coincides wih a star
-            if abs(self.mc.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
-                return "you won"
+            #Checks if MC position coincides wih a star
+            self.check_star_collected()
+        
+        def check_star_collected(self):
+            to_be_deleted = None
+            for s in self.star_locations.values():
+                if (abs(self.mc.xpos - s[1]) < 150 and abs((self.mc.ypos + 100)- s[2]) < 50) or (abs(self.companion.xpos - s[1]) < 150 and abs((self.companion.ypos + 100)  - s[2]) < 50):
+                    to_be_deleted = s
+                    break
+            
+            if to_be_deleted:
+                self.star_locations.pop((to_be_deleted[1], to_be_deleted[2]))
+                self.stars_found += 1
+
+
             
 
         
@@ -300,7 +333,7 @@ init python:
             self.star_locations = {}
             for i in range(3):
                 new_space =  (random.choice(range(100, 900)), random.choice(range(100, 900)))
-                self.star_locations[new_space] = ("minigame_assets/star.png", new_space[0], new_space[1])
+                self.star_locations[new_space] = (Image("minigame_assets/star.png"), new_space[0], new_space[1])
                 # object_borders.append((new_space[0] - 10, new_space[1] - 30, new_space[0] + 10, new_space[1]))
 
 
@@ -311,7 +344,7 @@ label minigame():
     window hide 
     $ quick_menu = False
 
-    call screen stealth_minigame
+    call screen stealth_minigame(3, 1)
     
     $ quick_menu = True
     window show
@@ -324,9 +357,9 @@ label minigame():
     return 
 
 #TODO: Keep Track of Stars. Keep Track of time
-screen stealth_minigame():
+screen stealth_minigame(coin_nr, flashlight_nr):
     add "bg minigame"
-    default s_game = StealthGame()
+    default s_game = StealthGame(coin_nr, flashlight_nr)
     add s_game
 
     text _("Yes")
