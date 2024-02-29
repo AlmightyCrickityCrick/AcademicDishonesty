@@ -11,9 +11,21 @@ init python:
 
     object_borders = []
 
+#=TODO: Repair collision. It might be twinning some coordinates and making it look like theres invisible object
     def check_collision(x, y):
+        # print("Position")
+        # print((x, y))
+        # print("Object Borders")
+        # print(object_borders)
+        # print(len(object_borders))
         for ob in object_borders: #(x0, y0, x1, y1) tuple
             if ((x >= ob[0] and x<= ob[2])) and (y >= ob[1] and y<= ob[3]):
+                # print("Position")
+                # print((x, y))
+                # print("Object")
+                # print(ob)
+                # print("Object Borders")
+                # print(object_borders)
                 return True
         return False
 
@@ -57,14 +69,14 @@ init python:
         
         def event(self, ev, x, y, st):
             if (ev.key in [self.right_key, self.left_key, self.up_key, self.down_key]):
-                self.observer.notify_obs("sound", self.xpos, self.ypos)
+                self.observer.notify_obs("sound", self.chara_type, self.xpos, self.ypos)
 
             if(ev.key == self.right_key):
                 self.xpos += 10 if (not check_collision(self.xpos + 10, self.ypos)) else 0
             elif(ev.key == self.left_key):
-                self.xpos -= 10 if (not check_collision(self.xpos - 10, self.ypos)) else 0
+                self.xpos -= 10 if (self.xpos-10 >= 0 and not check_collision(self.xpos - 10, self.ypos)) else 0
             elif(ev.key == self.up_key):
-                self.ypos -= 10 if (not check_collision(self.xpos, self.ypos - 10)) else 0
+                self.ypos -= 10 if (self.ypos-10 >= 0 and not check_collision(self.xpos, self.ypos - 10)) else 0
             elif(ev.key == self.down_key):
                 self.ypos += 10 if (not check_collision(self.xpos, self.ypos + 10)) else 0
             elif(ev.key == self.flash_key):
@@ -72,7 +84,7 @@ init python:
                 self.change_sprite_state(self.is_flashing)
             
             if (self.is_flashing):
-                self.observer.notify_obs("light", self.xpos, self.ypos)
+                self.observer.notify_obs("light", self.chara_type, self.xpos, self.ypos)
             
         
         def change_sprite_state(self, flash):
@@ -96,8 +108,10 @@ init python:
             self.ydir = None
 
             self.state = "idle" #idle, alert, static
-            self.playable_list = []
+            self.playable_dict = {}
             self.investigation_speed = 3
+            self.following_character = None
+
 
             self.sprite = Transform("minigame_assets/guard.png")
 
@@ -119,6 +133,7 @@ init python:
         def move(self):
             if self.state == "static":
                 pass
+#TODO: SETUP Idle Routine for guards
             elif self.state == "idle":
                 m = self.random_move()
                 self.xpos += m[0]
@@ -128,27 +143,33 @@ init python:
                 self.ydir = 1 if (self.trigger_posy > self.ypos) else -1
 
                 if (self.xpos == self.trigger_posx and self.ypos == self.trigger_posy):
+                    self.notify_obs("", self.following_character, self.playable_dict[self.following_character].xpos, self.playable_dict[self.following_character].ypos)
                     self.state = "idle"
                     self.trigger_posx = None
                     self.trigger_posy = None
+
                 
-                if(self.xpos != self.trigger_posx and not check_collision(self.xpos + (self.xdir * self.investigation_speed), self.ypos)):
+                if(self.xpos != self.trigger_posx 
+                # and not check_collision(self.xpos + (self.xdir * self.investigation_speed), self.ypos)
+                ):
                     self.xpos += self.xdir * self.investigation_speed
 
-                if (self.ypos != self.trigger_posy and not check_collision(self.xpos, self.ypos + (self.ydir * self.investigation_speed))):
+                if (self.ypos != self.trigger_posy 
+                # and not check_collision(self.xpos, self.ypos + (self.ydir * self.investigation_speed))
+                ):
                     self.ypos += self.ydir * self.investigation_speed
                 
 
 
                 
         def random_move(self):
-            return random.choice([-1, 0, 1]), random.choice([-1, 0, 1])
+            return random.choice([-3, 3]), random.choice([-3, 3])
 
         def observe(self, playable):
-            self.playable_list.append(playable)
+            self.playable_dict[playable.chara_type] = playable
             playable.attach_observer(self)
         
-        def notify_obs(self, n_type , x, y):
+        def notify_obs(self, n_type, c_type, x, y):
             if((self.catch_cone(x, y))):
                 self.game_over = True
                 renpy.timeout(0)
@@ -158,6 +179,7 @@ init python:
                 self.state = "alert"
                 self.trigger_posx = x
                 self.trigger_posy = y
+                self.following_character = c_type
             
 
         def render(self, width, height, st, at):
@@ -173,19 +195,18 @@ init python:
     class StealthGame(renpy.Displayable):
         def __init__(self, **properties):
             super(StealthGame, self).__init__(**properties)
-            self.object_height = 20
-            self.object_width = 20
             self.render_size = (1920, 1080)
 
-            # Setting up coordinates of objects and sprites
+            print('I am calling render')
+
+            # Setting up coordinates of where the guard has to be moved to finish the game (blue square)
             self.finish_x = 1600
             self.finish_y = 540
 
             self.object_reset()
             self.object_sprites = []
             for x in self.object_locations:
-                self.object_sprites.append(Image(x[0], xsize= self.object_width, ysize = self.object_height))
-                # self.object_sprites.append(Composite((256, 256), (0, 0), x[0], (0, 0), "minigame_assets/destination.png"))
+                self.object_sprites.append(Image(x[0]))
             
             self.guard = GuardSprite()
             self.mc = PlayableSprite("main", 500, 50)
@@ -202,6 +223,10 @@ init python:
             r = renpy.Render(self.render_size[0], self.render_size[1])
             
             
+            for i in object_borders:
+                pi = renpy.render(Solid("#00f", xsize = i[2] - i[0], ysize = i[3] - i[1]), 800, 600, st, at)
+                r.blit(pi, (i[0], i[1]))
+            
             for x in range(len(self.object_sprites)):
                 o_loc = self.object_locations[x]
                 o_sprite = self.object_sprites[x]
@@ -215,13 +240,13 @@ init python:
             r.blit(x, (self.finish_x, self.finish_y))
 
 
-            x = self.guard.render(width, height, st, at)
+            x = self.guard.render(self.render_size[0], self.render_size[1], st, at)
             r.blit(x, (self.guard.xpos, self.guard.ypos))
 
             x = self.mc.render(width, height, st, at)
             r.blit(x, (self.mc.xpos, self.mc.ypos))
 
-            x = self.companion.render(width, height, st, at)
+            x = self.companion.render(self.render_size[0], self.render_size[1], st, at)
             r.blit(x, (self.companion.xpos, self.companion.ypos))
 
             renpy.redraw(self, 0)
@@ -242,6 +267,10 @@ init python:
 
             if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
                 return "you won"
+
+            #TODO: Check if MC position coincides wih a star
+            if abs(self.mc.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
+                return "you won"
             
 
         
@@ -249,22 +278,33 @@ init python:
             child_list = self.object_sprites
             return child_list
         
-        # Need some proper level design for this thing because random sucks
+        #TODO: Need some proper level design for this thing because random sucks
         def object_reset(self):
             object_img = ["minigame_assets/plant.png", "minigame_assets/trashcan.png", "minigame_assets/sofa.png", "minigame_assets/vending_machine.png"]
             self.object_locations = []
-            xpositions = list(range(10, self.render_size[0] - 200 , 50))
-            ypositions = list(range(10, self.render_size[1] - 200, 50))
+            xpositions = list(range(70, self.render_size[0] - 200 , 50))
+            ypositions = list(range(200, self.render_size[1] - 200, 50))
+            globals() ['object_borders'] = []
 
-
-            while len(self.object_locations) < 15:
+            #Sets objects around the room
+            while len(self.object_locations) < 10:
                 new_space =  (random.choice(xpositions), random.choice(ypositions))
                 xpositions.remove(new_space[0])
                 ypositions.remove(new_space[1])
                 self.object_locations.append((random.choice(object_img), new_space[0], new_space[1]))
+                #Adds the current object's borders to a list
                 object_borders.append((new_space[0] - 70, new_space[1] - 200, new_space[0] + 70, new_space[1]))
+                print(len(object_borders), len(self.object_locations))
+
+            #TODO: Sets the 3 stars around the room
+            self.star_locations = {}
+            for i in range(3):
+                new_space =  (random.choice(range(100, 900)), random.choice(range(100, 900)))
+                self.star_locations[new_space] = ("minigame_assets/star.png", new_space[0], new_space[1])
+                # object_borders.append((new_space[0] - 10, new_space[1] - 30, new_space[0] + 10, new_space[1]))
 
 
+#TODO: Add tutorial and Ending screen
 label minigame():
 
     dark "Hello"
@@ -283,6 +323,7 @@ label minigame():
 
     return 
 
+#TODO: Keep Track of Stars. Keep Track of time
 screen stealth_minigame():
     add "bg minigame"
     default s_game = StealthGame()
