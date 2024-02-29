@@ -130,6 +130,7 @@ init python:
         def catch_cone(self, x, y):
             return x in range(self.xpos - 100, self.xpos + 100) and y in range(self.ypos - 100, self.ypos + 100)
         
+        # The movement state machine
         def move(self):
             if self.state == "static":
                 self.ydir = random.choice([1, -1])
@@ -403,7 +404,7 @@ label minigame(coin_nr=3, flashlight_nr=6):
     $ quick_menu = True
     window show
 
-    return 
+    return _return
 
 screen tutorial_screen():
     add "bg minigame tutorial":
