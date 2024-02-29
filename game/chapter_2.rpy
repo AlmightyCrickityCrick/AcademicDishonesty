@@ -3,6 +3,9 @@ define Ana = Character("Ana", color="#75cc69", image="Ana")
 define Maria = Character("Maria", color="#979c4c", image="Maria")
 define Theodora = Character("Theodora", color="#d4604c", image="Theodora")
 define David = Character("David", color="#ac619f", image="David")
+define Alex = Character("Alex", color="#502749", image="Alex")
+image window = "chapter_2/window_FAF_cab.png"
+image rope = "chapter_2/rope.png"
 
 label chapter2:
     jump high_way_to_hell
@@ -102,3 +105,153 @@ label from_bad_to_worse:
 
     "Theodora pinched the bridge of her nose."
     Theodora "David, no offense, but we can't exactly walk from room to room to distract him, and that's kind of needed in this situation."
+    hide theodora with dissolve
+
+label bad_situations_require_bad_solutions:
+    "I frowned."
+    "We couldn't really be locked though?"
+    "There should be other options of movement besides the main hallway?"
+    "It's not like we could get locked inside. There had to be some doors, maybe holes in the wall, or some…"
+    "It took me a second to remember the time Vasile left his phone in a locked cabinet."
+
+    "I jumped at the possibility immediately."
+    mc "Guys, we can use another method. I once had a colleague who forgot his phone in the nearby cabinet"
+    "I traversed the room under their questioning gaze and got up on the sofa,"
+    mc "There's a small ledge under the windows, if you're careful enough, you can use it to move from one cabinet to the others."
+
+    show window at center with dissolve:
+        xpos 950 
+        ypos 700
+
+    "Marius brightened and came over to confirm my words for himself."
+
+    show marius at left with dissolve
+    Marius "Oh. I never noticed."
+    Marius "It's extremely narrow, though. There's barely any room for a foot."
+    hide marius with dissolve
+
+    show david at right with dissolve
+    "David came closer and took a look at the ledge before determination crossed his face."
+    David "I can distract him. I've had to walk in smaller spaces, it won't be a problem."
+    "He looked at me."
+    David "Do you have any rope or something else I could use?"
+    hide david with dissolve
+
+    hide window with dissolve
+
+    $ phone = True # remove later when combine with chap 1
+    menu: 
+        "Hand the rope":
+            jump dangerous_maneuvre
+        "Hide in physics lab" if phone == True:
+            jump stealing_or_saving
+        
+label dangerous_maneuvre:
+    show rope at center with dissolve
+    mc "Here, I said as I put a coil in his hand, and he started wrapping it around the metal bar next to the window,  Be careful not to fall there."
+    hide rope
+
+    show david at right with dissolve
+    David "Thanks, but I'm kinda favored by God, so you shouldn't worry,” the guy laughed and I started to question the decision of letting him go through this."
+    David "So, how will we do this? He turned to Marius for indications."
+    hide david with dissolve
+
+    "Marius seemed to forget their rivalry for a second and focused on making sure the rope was tied well enough, before he busied himself with opening the window."
+    
+    show marius at right with dissolve
+    Marius "It'll go as usual. Same flash for distraction, two for help, then move, and if you're close to being spotted, crouch."
+    hide marius with dissolve
+
+    "David furrowed his brow."
+    show david at right with dissolve
+    David "Is someone else going to be walking the ledge on the other side of the hall?"
+    hide david with dissolve
+
+    show marius at right with dissolve
+    Marius "It's not necessary, neither for you, nor for the partner."
+    Marius "The gig will work as usual, it's only distracting the guard for the first time and getting the partner to the first position that is going to be troublesome." 
+    Marius "You climb to another cabinet, distract the guard, then you'll be walking the hallways as before."
+    
+
+    "He turned towards me and the others."
+    Marius "Does anyone want to volunteer to be the second distraction?"
+    hide marius with dissolve
+
+    menu:
+        "Volunteer":
+            $ d_affection = d_affection + 1
+            mc "I'll do it,"
+            "I looked through the window, calculating the height if David did decide to take the plunge."
+
+            show ana with dissolve:
+                xpos 300
+                ypos 120
+                zoom 0.7
+            "Ana looked at me with a raised eyebrow." 
+            Ana "Are you sure? Do you know what you're supposed to do?"
+            hide ana
+
+            menu:
+                "No (see tutorial)":
+                    jump tutorial_screen
+                "Yes (skip tutorial)":
+                    mc "Yes, it's fine. We'll be back before you say Chebyshev,"
+
+                    show theodora at right with dissolve
+                    "Alright, then suit yourself,  Theodora shrugged." 
+                    Theodora "Just be careful not to be caught and not to get your partner caught."
+                    hide theodora
+
+            "I nodded my thanks and prepared myself morally for the mission."
+
+            "David climbed onto the windowsill, eyeing me gratefully and told me to wait for the signal."
+            "I saluted him and moved closer to the door, just as the guy disappeared from the view of the group in his whole slippery glory."
+
+            "I listened to the guard's whistle, until it got quiet and his keys started giggling."
+            "After his steps were gone, I immediately set out for my position."
+
+            jump minigame
+
+            if _return:
+                "Feeling victorious, we rushed out of the cabinet, towards the stairs, when the unexpected happened. The lights turned off."
+
+                jump lights_out
+
+        "Abstain":   
+            $ d_affection = d_affection - 1
+
+            "I watched in silence as people considered whether to volunteer. While Marius made it sound easy, the truth was, on unknown territory, with lots of obstacles, the mission increased its difficulty at least twofold."
+
+            "After a few minutes of silent debating and anxious waiting on David's part, Ana stepped forth and agreed to be his partner."
+
+            "Maria once again checked the rope, before helping David onto the ledge and out of the window. We all huddled around the entrance to the room, keeping our eyes on the outline of the guard and waiting for the signal."
+
+            "Two minutes turned into five minutes, turned into twelve, and there was still nothing from the guy."
+
+            show ana with dissolve:
+                xpos 300
+                ypos 120
+                zoom 0.7
+            "Ana started chewing on her lip in worry." 
+            Ana "Do you think he fell?”"
+            hide ana
+
+            show maria with dissolve
+            "Maria didn't say anything, just left the side of the door and went to check the window. She moved this way and that before letting out a frustrated sigh."
+            Maria "I can't see him from here. So he's probably not dead, just picked a cabinet farther away."
+            hide maria
+
+            show alex with dissolve
+            "Just as Ana nodded her understanding, Alex jumped."
+            Alex "It's the signal. He started. Get ready"
+
+            "The minute the guard turned his back towards the door, Ana dashed to the other side of the corridor, inside a cabinet."
+            "It didn't take long for the guard to reach David, that his light went dead and Ana started clicking her flashlight, pointing at the guard. He changed direction, but David didn't come out of his cabinet."
+
+            "However, when the guard started approaching Ana, his light came from another room. He probably decided to use the windows, instead of the corridor."
+
+            "The dance continued, leading the guard further and further away, until he couldn't be seen anymore."
+
+            "We were almost celebrating our victory when the lights went out."
+
+            jump lights_out
