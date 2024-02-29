@@ -10,22 +10,11 @@ init python:
     import math
 
     object_borders = []
+    global_battery_nr = 0
 
-#=TODO: Repair collision. It might be twinning some coordinates and making it look like theres invisible object
     def check_collision(x, y):
-        # print("Position")
-        # print((x, y))
-        # print("Object Borders")
-        # print(object_borders)
-        # print(len(object_borders))
         for ob in object_borders: #(x0, y0, x1, y1) tuple
             if ((x >= ob[0] and x<= ob[2])) and (y >= ob[1] and y<= ob[3]):
-                # print("Position")
-                # print((x, y))
-                # print("Object")
-                # print(ob)
-                # print("Object Borders")
-                # print(object_borders)
                 return True
         return False
 
@@ -48,7 +37,6 @@ init python:
                 self.down_key =pygame.locals.K_s
                 self.right_key = pygame.locals.K_d
                 self.flash_key = pygame.locals.K_e
-
 
             self.sprite = Transform(self.img)
 
@@ -76,12 +64,17 @@ init python:
             elif(ev.key == self.left_key):
                 self.xpos -= 10 if (self.xpos-10 >= 0 and not check_collision(self.xpos - 10, self.ypos)) else 0
             elif(ev.key == self.up_key):
-                self.ypos -= 10 if (self.ypos-10 >= 0 and not check_collision(self.xpos, self.ypos - 10)) else 0
+                self.ypos -= 10 if (self.ypos-10 >= 120 and not check_collision(self.xpos, self.ypos - 10)) else 0
             elif(ev.key == self.down_key):
                 self.ypos += 10 if (not check_collision(self.xpos, self.ypos + 10)) else 0
             elif(ev.key == self.flash_key):
-                self.is_flashing = not self.is_flashing
-                self.change_sprite_state(self.is_flashing)
+                if(self.is_flashing == False):
+                    if globals() ['global_battery_nr'] > 0:
+                        self.is_flashing = not self.is_flashing
+                        self.change_sprite_state(self.is_flashing)
+                else:
+                    self.is_flashing = not self.is_flashing
+                    self.change_sprite_state(self.is_flashing)
             
             if (self.is_flashing):
                 self.observer.notify_obs("light", self.chara_type, self.xpos, self.ypos)
@@ -90,6 +83,7 @@ init python:
         def change_sprite_state(self, flash):
             if (flash):
                 self.sprite = Composite((256, 256), (150, 0), "minigame_assets/flashlight_aura.png", (0, 0), self.img)
+                globals() ['global_battery_nr'] -=1
             else:
                 self.sprite = Transform(self.img)
 
@@ -147,20 +141,21 @@ init python:
                     self.state = "idle"
                     self.trigger_posx = None
                     self.trigger_posy = None
-
                 
-                if(self.xpos != self.trigger_posx 
-                # and not check_collision(self.xpos + (self.xdir * self.investigation_speed), self.ypos)
-                ):
+                self.try_go_vertical()
+                self.try_go_horizontal()
+
+        #Define straight movement with obstacle collision clause        
+        def try_go_vertical(self):
+            if(self.xpos != self.trigger_posx):
+                if not check_collision(self.xpos + (self.xdir * self.investigation_speed), self.ypos):
                     self.xpos += self.xdir * self.investigation_speed
 
-                if (self.ypos != self.trigger_posy 
-                # and not check_collision(self.xpos, self.ypos + (self.ydir * self.investigation_speed))
-                ):
+        
+        def try_go_horizontal(self):
+            if (self.ypos != self.trigger_posy):
+                if not check_collision(self.xpos, self.ypos + (self.ydir * self.investigation_speed)):
                     self.ypos += self.ydir * self.investigation_speed
-                
-
-
                 
         def random_move(self):
             return random.choice([-3, 3]), random.choice([-3, 3])
@@ -200,36 +195,65 @@ init python:
 
             #Upper Menu Objects
             self.coin_nr = coin_nr
-            self.battery_nr = battery_nr
+            globals() ['global_battery_nr'] = battery_nr
             self.stars_found = 0
+            self.menu = Image("minigame_assets/top_bar.png")
+            self.small_star_sprite = Image("minigame_assets/small_star.png")
+            self.coin_sprite = Image("minigame_assets/coin.png")
 
 
             # Setting up coordinates of where the guard has to be moved to finish the game (blue square)
             self.finish_x = 1600
             self.finish_y = 540
 
+            # Setting up the positions of objects and stars
             self.object_reset()
+
+            # Defining the game object sprites
             self.object_sprites = []
             for x in self.object_locations:
                 self.object_sprites.append(Image(x[0]))
             
             self.guard = GuardSprite()
-            self.mc = PlayableSprite("main", 500, 50)
-            self.companion = PlayableSprite("companion", 20, 80)
+            self.mc = PlayableSprite("main", 500, 200)
+            self.companion = PlayableSprite("companion", 20, 700)
             self.finish_line = Image("minigame_assets/destination.png")
+            self.star_sprite = Image("minigame_assets/star.png")
+            self.battery_sprite = Image("minigame_assets/battery.png")
 
             self.guard.observe(self.mc)
             self.guard.observe(self.companion)
 
                 
         def render_menu(self, r, width, height, st, at):
-            menu = Solid("#")
-            pass
+            #Renders top bar
+            x = renpy.render(self.menu, width, height, st, at)
+            r.blit(x, (350, -50))
+            #Renders Battery
+            x = renpy.render(self.battery_sprite, width, height, st, at)
+            r.blit(x, (600, 62))
 
+            #Renders Battery Nr
+            x = renpy.render(Text(str(global_battery_nr), size=26, color="#c23535"), width, height, st, at)
+            r.blit(x, (630, 67))
+
+            #Renders coin
+            x = renpy.render(self.coin_sprite, width, height, st, at)
+            r.blit(x, (670, 62))
+            
+            #Renders Coin Nr
+            x = renpy.render(Text(str(self.coin_nr), size=26, color="#c23535"), width, height, st, at)
+            r.blit(x, (710, 67))
+
+            #Renders Stars on Top Bar
+            for i in range(self.stars_found):
+                x = renpy.render(self.small_star_sprite, width, height, st, at)
+                r.blit(x, (1200 + 50 * i, 62))
+ 
         def render_game_zone(self, r, width, height, st, at):
-            # Render of stars
+            # Render of stars in game zone
             for i in self.star_locations.values():
-                pi = renpy.render(i[0], 40, 40, st, at)
+                pi = renpy.render(self.star_sprite, 40, 40, st, at)
                 r.blit(pi, (i[1], i[2]))
             
             # Render of Game objects
@@ -268,7 +292,7 @@ init python:
             renpy.redraw(self, 0)
 
             # Checks each render if the guard is at the finishing lane
-            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250:
+            if abs(self.guard.xpos - self.finish_x) < 100 and abs(self.guard.ypos + 150 - self.finish_y) < 250:
                 renpy.timeout(0)
 
             return r
@@ -279,34 +303,31 @@ init python:
                 self.mc.event(ev, x, y, st)
                 self.companion.event(ev, x, y, st)
             
+            self.check_star_collected()
+
             if self.guard.game_over:
                 if self.coin_nr > 0:
                     self.guard.game_over = False
                     self.coin_nr -= 1
                 else:
-                    return "you lost"
+                    return "lost"
 
-            if abs(self.guard.xpos - self.finish_x) < 250 and abs(self.guard.ypos - self.finish_y) <250 and self.stars_found > 1:
-                return "you won"
+            if abs(self.guard.xpos - self.finish_x) < 100 and abs(self.guard.ypos - self.finish_y) <250 and self.stars_found > 1:
+                return "won"
 
-            #Checks if MC position coincides wih a star
-            self.check_star_collected()
-        
+
+        #Checks if MC or Companion position coincides wih a star
         def check_star_collected(self):
             to_be_deleted = None
             for s in self.star_locations.values():
                 if (abs(self.mc.xpos - s[1]) < 150 and abs((self.mc.ypos + 100)- s[2]) < 50) or (abs(self.companion.xpos - s[1]) < 150 and abs((self.companion.ypos + 100)  - s[2]) < 50):
                     to_be_deleted = s
                     break
-            
+            # Deletes the star from the dictionary of stars to be rendered and adds it to be rendered in top bar
             if to_be_deleted:
                 self.star_locations.pop((to_be_deleted[1], to_be_deleted[2]))
                 self.stars_found += 1
 
-
-            
-
-        
         def visit(self):
             child_list = self.object_sprites
             return child_list
@@ -329,25 +350,25 @@ init python:
                 object_borders.append((new_space[0] - 70, new_space[1] - 200, new_space[0] + 70, new_space[1]))
                 print(len(object_borders), len(self.object_locations))
 
-            #TODO: Sets the 3 stars around the room
+            #Sets the 3 stars around the room
             self.star_locations = {}
             for i in range(3):
                 new_space =  (random.choice(range(100, 900)), random.choice(range(100, 900)))
-                self.star_locations[new_space] = (Image("minigame_assets/star.png"), new_space[0], new_space[1])
-                # object_borders.append((new_space[0] - 10, new_space[1] - 30, new_space[0] + 10, new_space[1]))
+                self.star_locations[new_space] = ("minigame_assets/star.png", new_space[0], new_space[1])
 
 
-#TODO: Add tutorial and Ending screen
 label minigame():
 
-    dark "Hello"
+    call screen tutorial_screen()
     window hide 
     $ quick_menu = False
 
-    call screen stealth_minigame(3, 1)
+    call screen stealth_minigame(3, 6)
     
     $ quick_menu = True
     window show
+
+    call screen ending_screen(_return)
 
     if _return == "you lost":
         dark "Game Over"
@@ -356,7 +377,11 @@ label minigame():
 
     return 
 
-#TODO: Keep Track of Stars. Keep Track of time
+# screen tutorial_screen():
+
+# screen ending_screen(condition):
+
+
 screen stealth_minigame(coin_nr, flashlight_nr):
     add "bg minigame"
     default s_game = StealthGame(coin_nr, flashlight_nr)
