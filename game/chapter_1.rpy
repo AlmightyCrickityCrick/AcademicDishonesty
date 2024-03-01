@@ -1251,7 +1251,7 @@ label up_we_go:
 
     hide david
 
-    show throdora at pos with dissolve:
+    show theodora at pos with dissolve:
         zoom 0.8
 
     Theodora "PBL!"
@@ -1717,8 +1717,6 @@ label playing_heroics:
     menu:
 
         "No":
-
-            "Tutorial time"
 
             call tutorial_screen
 

@@ -436,7 +436,7 @@ screen ending_screen(condition):
             null height 50
             textbutton _("Continue"):
                 xalign 0.5
-                action Return(False)
+                action Jump("minigame_bad_end")
             textbutton _("Retry"):
                 xalign 0.5
                 action Jump("minigame")
@@ -472,8 +472,10 @@ label tutorial_screen:
 
     hide theodora
 
-    show ana at pos_left:
-        zoom 0.55 
+    show ana:
+        xpos 300
+        ypos 120
+        zoom 0.7
     
     Ana "Be wary of the guards."
 
@@ -500,6 +502,21 @@ label tutorial_screen:
     return
         
 
+label minigame_bad_end:
+    scene black
+
+    "I heard the humming get stronger and stronger, as I waited for my partner to turn on the lights, hoping he’ll do it on time."
+
+    "But the moment the humming stopped and my eyes met the angry glare of the guard, I knew, I was beyond saving."
+
+    scene bg bad_ending
+
+    "Here, my game is over..."
+
+    $ quick_menu = True
+    window show
+
+    jump prolog
 
 screen stealth_minigame(coin_nr, flashlight_nr):
     add "bg minigame"
