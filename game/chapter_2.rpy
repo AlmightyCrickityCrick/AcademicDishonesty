@@ -6,6 +6,7 @@ define David = Character("David", color="#ac619f", image="David")
 define Alex = Character("Alex", color="#502749", image="Alex")
 image window = "chapter_2/window_FAF_cab.png"
 image rope = "chapter_2/rope.png"
+image smartphone = "chapter_1/Smartphone.png"
 
 label chapter2:
     jump high_way_to_hell
@@ -255,3 +256,97 @@ label dangerous_maneuvre:
             "We were almost celebrating our victory when the lights went out."
 
             jump lights_out
+
+label stealing_or_saving:
+    "I rummaged through my bag to find the rope that I brought from home, when my hand stumbled upon a slick brick of unfamiliar shape."
+    "I stopped for a second, before remembering that I've picked up Viorel's phone when I still had no idea about the existence of the group."
+
+    "I thought whether it would be questionable or not that I had possession of their friend's property, before I decided to roll with the ball."
+    show smartphone with dissolve
+
+    mc "I actually have a different idea"  
+    "I take out the spoil of war and showthe big smartphone to the others."
+    "Immediately recognition passed through their gazes, before settling on warriness."
+
+    "Yeah, about what I was expecting."
+    mc "I picked this up back in the classroom when I was trying to identify who forgot their stuff..."
+    mc "Didn't manage to put it back before the guard showed up, and kind of forgot about it after meeting you guys."
+
+    "The reasoning was dumb, but somehow, either due to actually showing the phone or due to exhaustion, it did the job because they dropped the hostile attitude immediately."
+
+    hide smartphone with dissolve
+
+    show marius at center with dissolve
+    "Marius inquired as he eyed the device."
+    Marius "What are you proposing?" 
+    hide marius
+
+    mc "You guys know his phone number, right?" 
+    mc "I was thinking that instead of playing hide and seek we could plant the phone on the other side of the corridor and call it."
+    mc "This way we won't have to risk running back and forth in plain light."
+
+    "The others considered the plan carefully before Theo tugged Marius by his sleeve."
+    show theodora
+    Theodora "It's a good idea. They've already caught Viorel."
+    Theodora "If we leave his phone to be found by the guards, he'll have a good motive for entering the university at night."
+    hide theodora
+
+    show david
+    "David's eyes widened at her words."
+    David "Then I'm all for this plan."
+    "He must have still felt guilty about setting the poor fellow to be caught."
+    hide david
+
+    "One by one the others weighed the pros and cons and also decided in favor." 
+    "All that was left was the unofficial leader of the group."
+
+    show marius
+    "Marius hummed, and we could all see on his face the moment he made the decision." 
+    Marius "Alright. Then that's what we'll do."
+    hide marius
+
+    "Alex gave out an appreciative “yes”, waited for me to take out the rope and hurried to help David tie it around himself and to the pole near the window."
+    "After the knots were all tied, he took the device in his hand and, with the help of Maria, went through and out of the window."
+
+    "Everybody huddled in the dimly lit cabinet around the sofa, awaiting David's return."
+
+    "Two minutes turned into five minutes, turned into twelve, and there was still nothing from the guy."
+
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+    "Ana started chewing on her lip in worry."
+    Ana "Do you think he fell?"
+    hide ana
+
+    show maria
+    "Maria didn't say anything, just checked the window again." 
+    "She moved this way and that, before letting out a frustrated sigh."
+    Maria "I can't see him from here."
+    Maria "So he's probably not dead, just picked a cabinet farther away."
+    hide maria
+
+    "Just as Ana nodded her understanding, a figure came through the window and arms wound themselves around Maria's shoulders, startling her."
+
+    show david
+    David "Did you miss your lord and savior?"
+    "David joked, poorly imitating Marius's cockiness."
+    hide david
+
+    "Maria jumped and then playfully slapped him for scaring her."
+
+    show marius
+    "Marius rolled his eyes and asked the slipper knight" 
+    Marius "Did you place it?"
+    hide marius
+
+    show david
+    David "Yep"
+    "David moved towards the door. Everyone else followed, settling their gaze on the still silhouette of the guard."
+    hide david
+    "Marius took out his phone." 
+    "The call went through and we heard a tiny beep once, twice, and then finally the ringtone started blasting through the hall, startling the guard and forcing him to check the cabinet."
+
+    "Feeling victorious, we rushed out of the cabinet, towards the stairs, when the unexpected happened. The lights turned off."
+    jump lights_out
