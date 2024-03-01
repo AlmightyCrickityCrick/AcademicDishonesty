@@ -1,7 +1,9 @@
 default visited_320 = False
 
-label counting_loses:
-    scene bg classroom_101_night_darkened
+image laptop_Windows_lock = "chapter_3/laptop_Windows_lock.png"
+
+label counting_losses:
+    scene bg third_floor_hall_dark
     
     "I took deep breaths as I calmed myself down in the darkness of the hallway."
 
@@ -49,6 +51,7 @@ label counting_loses:
     jump crossroads
     return
 
+
 label double_trouble:
     "My eyes widened as I saw what looked like a list of cabinets and their professors from the corner of my eye, but just as I wanted to make it public, Marius dragged me by my arm into a nearby cabinet."
 
@@ -62,6 +65,12 @@ label double_trouble:
     Ana "So, what now?"
 
     Ana "Do we just look from cabinet to cabinet?"
+
+    scene third_floor_hall_dark
+
+    show paper_with_cabinets_profesors with dissolve:
+        xalign 0.5 
+        yalign 0.5
 
     mc "No need, I saw a list nearby, it’ll show us what we’re looking for."
 
@@ -90,6 +99,7 @@ label double_trouble:
     "I alerted Marius about it, just as a victorious sound came from the side of the girls."
 
     "We looked at each other in confusion, before Maria voiced out the problem."
+    hide paper_with_cabinets_profesors with dissolve
 
     show maria with dissolve
     
@@ -145,7 +155,9 @@ label double_trouble:
 
     return
 
+
 label misery_of_a_man:
+    scene bg classroom_310
     "The twins and David followed, swiftly closing the door, just in time for this floor’s guard to cast his shadow under the door."
 
     "It was just a minute later that the light finally turned and, and with it, ironically, extinguished the hopes of catching up with Marius’ friends."
@@ -173,6 +185,7 @@ label misery_of_a_man:
     hide marius with dissolve
 
     return
+
 
 label crossroads:
     show ana with dissolve:
@@ -216,12 +229,18 @@ label crossroads:
 
             jump almost_420
 
+
 label breaking_into_317:
+    show door_with_lock:
+        xalign 0.5
+        yalign 0.5
     "When we finally arrived, we were presented with a simple wooden door on which hung a silver plaque with the writing “Receiving cabinet” written on it."
 
     "I tried the handle, but it didn’t work."
 
     mc "Can anyone pick a lock?"
+
+    hide door_with_lock
 
     "This wasn’t a James Bond movie, but I did feel kind of like him, considering all the action of today."
 
@@ -248,6 +267,8 @@ label breaking_into_317:
     Marius "Me and David will look out for the guard. You guys hurry up and find what we need."
 
     hide marius with dissolve
+
+    scene bg receiving_cabinet_dark
 
     "I nodded and followed the girls inside."
 
@@ -278,20 +299,30 @@ label breaking_into_317:
     else:
         jump what_are_we_looking_for
 
+
 default checks_in_317 = 0
+
 
 label desperation_second_name:
     menu:
         "Check the Wardrobe":
+            show open_wardrobe:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
             "I looked inside the wardrobe hoping to find… something? Anything? Whatever I was searching for it wasn’t a pack of japanese cat food."
 
+            hide open_wardrobe
+
             if checks_in_317 < 3:
                 jump desperation_second_name
 
         "Check the Table":
+            show mahogany_Table_With_Papers:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -302,7 +333,7 @@ label desperation_second_name:
             "Finally, a slip of paper with the numbers 32111967 on it found its way into my hands."
 
             "I stopped the search, feeling victorious, until a sliver of doubt slid inside my head. Was it this easy? Was this really the password?"
-
+            hide mahogany_Table_With_Papers
             menu:
                 "Continue Searching":
                     jump desperation_second_name
@@ -310,6 +341,9 @@ label desperation_second_name:
                     "We didn't have enough time. This will have to do."
 
         "Check the Laptop":
+            show laptop_Windows_lock:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -324,6 +358,7 @@ label desperation_second_name:
             "The password for the computer was eight digits. So was the password for the cabinet."
 
             "I jumped at the possibility, but doubt still clouded my mind. Would he actually use the same password?"
+            hide laptop_Windows_lock
             menu:
                 "Continue Searching":
                     jump desperation_second_name
@@ -356,17 +391,23 @@ label desperation_second_name:
 label what_are_we_looking_for:
     menu:
         "Check the Wardrobe":
+            show open_wardrobe:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
             "Because the least obvious place is, apparently, the best place to start, I took a look into the wardrobe."
             "I had hoped for nothing, and yet I was still disappointed in my findings."
             "Ten minutes lost in vain."
-
+            hide open_wardrobe
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
         "Check the Table":
+            show mahogany_Table_With_Papers:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -377,11 +418,14 @@ label what_are_we_looking_for:
             "A slip of paper with the numbers 32111964 on it."
 
             "However, there was no stack of exams."
-
+            hide mahogany_Table_With_Papers
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
         "Check the Laptop":
+            show laptop_Windows_lock:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -396,6 +440,7 @@ label what_are_we_looking_for:
             Maria "You do remember that the tests are on paper, right?"
 
             "I pouted, but closed the laptop."
+            hide laptop_Windows_lock
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
@@ -430,15 +475,19 @@ label what_are_we_looking_for:
     jump almost_420
 
 
-
-
 label almost_420:
     $ visited_320 = True
+
+    scene bg third_floor_hall_light
 
     "As we arrived in front of a metal door with a silver plaque with the writing “Rector cabinet” on it, I knew we hit the jackpot."
 
     "With its lack of doorknob and pincode password pad, it looked more like a safe door, than an entrance to a cabinet. However, if tests and confidential information were kept there, I could understand the need for additional security."
 
+    show metal_door_keypad:
+        xalign 0.5
+        yalign 0.5
+    
     mc "Does anyone know how we could open this?"
 
     "Marius looked pointedly at the twins."
@@ -453,12 +502,15 @@ label almost_420:
     
     "Well that did not sound optimistic."
 
+    hide metal_door_keypad
+
     if full_password:
         jump open_sesame
     else:
         jump attempts_were_made
 
 label open_sesame:
+    scene bg third_floor_hall_light
     "Wait."
 
     "The memory of Professor Bostan introducing the password this morning resurfaced in my mind."
@@ -485,6 +537,8 @@ label access_granted:
     
     "Marius grabbed the edge of the door and pulled it towards himself to show an extremely small room behind it."
 
+    scene bg rector_cabinet_dark
+    
     "It was barely enough to fit two people inside, three if they manage to cram themselves."
 
     Marius "Seems like we’ll have to go by groups."
@@ -556,4 +610,97 @@ label attempts_were_made:
                 jump access_granted
             else:
                 jump finita_la_comedia
+
+label last_ditch:
+
+    scene bg rector_cabinet_dark
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+
+    if time >= 50:
+        
+            "I was ready to lunge after the paper if Marius wasn't giving it to me, when the sound of a phone rang through the air."
+
+            "David stopped his glaring at Marius, in exchange for glaring at his phone."
+
+            "He cursed as he stopped what was actually a reminder, while me and Marius didn't dare take our eyes off each other."
+
+            "David looked between us two, then at the clock, then at us two again."
+
+            "I furrowed my brow in confusion as I saw with the edge of my vision how his face morphed from anger, to frustration, only to stop at hopelessness. "
+
+            "Understanding flashed across Marius' face before he grinned."
+
+            show amused_marius at pos with dissolve
+
+            Marius "That was the last call"
+
+            Marius "We either drop this discussion behind and leave the premises. Or we fight for a paper and remain blocked here for the rest of the night."
+
+            hide amused_marius
+
+            "I could feel my blood boiling with rage. This was unfair. A criminal in exchange for all the work we've done, all the sweat we put into it. Everything for naught."
+
+            "I feel the anger fester in me as David coaxes me to leave. I feel it pool through my veins as we watch Marius grow smaller and smaller."
+
+            "But at the core of this rage was not hatred, but helplessness."
+
+            "The fates hated me and they liked to give reminders of it by taunting me with the sweet wrapper of success covering behind itself the  bitterness of failure"
+
+            jump end_2
+    
+    else:
+
+            "I lunged at Marius the moment I saw an opening."
+
+            "He grabbed the paper and moved quickly out of the way, going around the room, until there was professor Bostan's table between us."
+
+            show smiling_marius at pos with dissolve
+
+            Marius "I suggest you be careful, so the other works don't end up in the air."
+
+            hide smiling_marius
+
+            "I went to the left, trying to catch him, but he repeated my movement."
+
+            "I moved to the right and he did the same."
+
+            "I thought about whether I'll manage to get to him in time if I decided to ruin the operation by jumping over the table"
+
+            "But before I could actually do anything, Marius put a hand over his eyes, a shining point clearly visible in the middle of his palm."
+
+            "I turned my head and caught David making good use of the lantern in my bag."
+
+            "I turned my head to one side to signal him to move in my position, while I went around the table and towards Marius."
+
+            "Hearing my steps from one side, he hurried to escape through the other, but David managed to grab his paper just before he made it through 
+            the door, scrunched it and threw it to me"
+
+            "Just as Marius recovered his vision, he noticed its absence, but it was too late."
+
+            "The paper was in my hands, our positions were reversed and I watched as his previous playfulness morphed back into anger."
+
+            mc "Any last words to your friend?"
+
+            "I asked him, fluttering the paper, but didn't give him a minute to respond, before I tore it into small pieces."
+
+            show amused_marius at pos with dissolve
+
+            Marius "Did you even understand what you just did?"
+
+            "I looked at the person who I, despite the brief acquaintance, considered a friend and felt the rift grow. It might heal at a later point, or it might never heal."
+
+            "I knew that from his perspective I just ruined months of work. However, from my perspective, I did the right thing."
+
+            mc "I became a monster in your eyes, so I can stop you from becoming a monster in the eyes of others"
+
+            hide amused_marius
+
+            if m_affection > 7:
+                jump end_3
+            else:
+                jump reprimand_ending
+
+
+# show at pos with dissolve
 
