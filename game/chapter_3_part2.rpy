@@ -119,3 +119,71 @@ label patrolling_together:
             "I nodded and followed David and Marius back to the cabinet."
 
             jump the_culmination
+
+label the_culmination:
+    scene bg classroom 315 night
+
+    "The cabinet looked even smaller from the inside, so Marius agreed to courteously wait outside for David to show me the ropes."
+
+    "I watched as the chosen one' sorted through the tests quickly, checking out the names, until he finally pulled my paper."
+
+    show test
+
+    "He was polite enough not to stare into it too much, but I still saw him cringe at my scribbles."
+    mc "Don't hold back on me. It's alright to laugh. I haven't prepared at all."
+
+    hide test
+
+    "A shadow of guilt crossed his face before he spoke"
+
+    show david
+
+    David "Then it's good that Father guided you here today. Everything happens for a reason. You might have failed your test, but you helped us change ours."
+
+    menu:
+        "Agree with this view":
+            $ d_affection = d_affection + 1
+            mc "I guess God really does look after you"
+
+            "David positively beamed."
+            "He'd have to get rid of his delusion one day, but that day was not today. And I was not the person to do it. He'd have to take that step on his own."
+
+        "Disagree with his view":
+            $ d_affection = d_affection - 1
+
+            mc "You know you shouldn't speak like that about God? Or distort the concept of destiny to fit your narrative. What happened, happened."
+
+            "However, I felt like I kicked a puppy when I looked towards him and caught the hurt in his eyes, before he schooled his expression into an easygoing smile."
+
+
+    hide david
+
+    mc "Alright, back into the stack it went" 
+    "I went, as I put the fresh, new and correct sheet back into the pile."
+
+    show marius
+    Marius "Are you guys done?"
+    mc "Yes, we're done."
+    "I confirmed and exited the room with David in tow, speaking about the plans till the next semester."
+
+    scene bg second_floor_hall light
+
+    "We walked a few steps ahead, to give Marius some privacy, when David suddenly stopped and the same unrecognizable look crossed his face again."
+
+    "I also paused, worried that he might have been feeling unwell"
+
+    mc "Is everything alright?"
+
+    if d_affection < 7:
+        "David shook his head, smiled, and said “No, I'm fine.”, just as Marius caught up to us."
+
+        show marius
+        Marius "Alright guys, the tests are home, we are free and can finally go get some sleep."
+        Marius "Hope I'll have the occasion to hang out with you once more, but without committing crimes."
+        hide marius
+
+        "We stealthily exited the university, having accomplished our goal. And indeed, everything was fine, we came out of this battle victorious. And yet, I couldn't help but feel as if I've missed something really important tonight."
+        jump end_1
+    
+    if d_affection >= 8:
+        jump bad_feelings
