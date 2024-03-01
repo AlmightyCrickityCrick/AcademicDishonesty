@@ -97,7 +97,6 @@ label from_bad_to_worse:
 
     return
 
-
 label privileges_used_for_evil:
     "I dove towards the FAFcab, taking out the key out of my pocket, for once grateful not to have it on a ring, and turned the lock open."
 
@@ -107,7 +106,6 @@ label privileges_used_for_evil:
 
     jump from_bad_to_worse
     jump bad_situations_require_bad_solutions
-
 
 label a_different_kind_of_lab:
     "I dove towards the physics laboratory, taking out the key out of my pocket found in 118, and turned the lock open."
@@ -232,10 +230,9 @@ label a_different_kind_of_lab:
 
                     "Or at least it would have been if the lights didn't turn off, just as we stepped foot into the hallway."
 
-                    jump light_out
+                    jump lights_out
         "Find an alternative way to move around":
             jump bad_situations_require_bad_solutions
-    return
 
 label bad_situations_require_bad_solutions:
     "I frowned."
@@ -275,7 +272,6 @@ label bad_situations_require_bad_solutions:
             jump dangerous_maneuvre
         "Hide in physics lab" if phone == True:
             jump stealing_or_saving
-    return
         
 label dangerous_maneuvre:
     show rope at center with dissolve
@@ -386,8 +382,6 @@ label dangerous_maneuvre:
             "We were almost celebrating our victory when the lights went out."
 
             jump lights_out
-    
-    return
 
 label stealing_or_saving:
     "I rummaged through my bag to find the rope that I brought from home, when my hand stumbled upon a slick brick of unfamiliar shape."
@@ -483,4 +477,73 @@ label stealing_or_saving:
     "Feeling victorious, we rushed out of the cabinet, towards the stairs, when the unexpected happened. The lights turned off."
     jump lights_out
     
-    return
+label lights_out:
+    scene bg second_floor_hall
+
+    "No, No, No."
+
+    "I panicked as the lamps above us went off, leaving us in shrouded darkness, among a sea of obstacles scattered between us and our path to freedom, with its guardian right behind us, just waiting for us to stall."
+
+    "I didn't think twice before grabbing the hand that was closest to me and dragging whoever I got right behind me."
+    "I prayed that I still remembered the layout because this was either the place where we would succeed and get closer to our goal or the place where we would get utterly hurt and humiliated."
+
+    $ correct_order = ['sofa', 'sofa', 'plant', 'trophy', 'trophy', 'table', 'table', 'table']
+    $ correct_num = 0
+    $ current_index = 0
+
+
+    while current_index < 8:        
+        menu:
+            "sofa":
+                if correct_order[current_index] == 'sofa':
+                    $ correct_num = correct_num +1
+                    "I jumped over something, prepared for it to be a sofa and felt my heart stop, before it beat faster, because I made it."
+                else: 
+                    "I jumped over something, prepared for it to be a sofa and felt my heart stop, before regretting, because what should have been a clean jump, ended in a painful stumble."
+                $ current_index = current_index + 1
+            "plant":
+                if correct_order[current_index] == 'plant':
+                    $ correct_num = correct_num +1
+                    "I squeezed my way besides something leafy, narrowly missing the base of the vase."
+                else: 
+                    "I squeezed my way while passing by, but instead of feeling foliage, my elbow collided with something hard, leaving my arm throbbing."
+                $ current_index = current_index + 1
+            "trophy":
+                if correct_order[current_index] == 'trophy':
+                    $ correct_num = correct_num +1
+                    "I dodged and hoped not to hear the sound of glass shattering, and when all I left behind was dust, I sighed relieved, but didn't stop running."
+                else: 
+                    "I dodged at just the wrong time, colliding with a heavy object, and heard the sound of something breaking."
+                $ current_index = current_index + 1
+            "table":
+                if correct_order[current_index] == 'table':
+                    $ correct_num = correct_num +1
+                    "I crawled beneath what I believed was a table, barely tall enough to fit me and my partner."
+                else: 
+                    "I started to crawl beneath what I believed was a table, only to bump my head and lose a few precious seconds."
+                $ current_index = current_index + 1
+    
+    if correct_num>4:
+        "We sped through the chaos of the hallway, praying to make it out of there in one piece, listening to the steps of both my friends and enemy behind me."
+
+        "Just as I was starting to feel like we took a wrong turn somehow, my foot hit a stair and I fell forward."
+        "It was probably the first time I was happy to have stabbed a toe."
+
+        "Not stopping for the pain, I continued dragging my companion forward, up the stairs, until we finally reached the first flight."
+        "I let go of their hand, but didn't stop running."
+        "I kept going up and up and up, until finally the stairs gave way to flat ground and I heard no more steps behind me, only panting."
+
+           
+        jump counting_losses
+    else:
+        "{size=-10}I tried to keep up with the rest of the footsteps ahead of me, as I poorly maneuvered within the labyrinth, but as time went by, and as more and more objects kept being thrown at me by whichever deity I managed to anger this evening, I lost track of both my friends, as well as the direction.{/size}"
+
+        "I prayed that I would be given a sight. A way to at least guess what stood ahead of me when the universe decided to grant me my wish."
+
+        scene bg second_floor_hall light
+
+        "The light turned on."
+
+        "And as my eyes got used to the brightness once more, all I could see in front of me was the angry guard, and my doom."
+
+        scene bg bad ending with fade
