@@ -702,5 +702,119 @@ label last_ditch:
                 jump reprimand_ending
 
 
+label bad_feelings:
+    $pos_left = Position(xpos=0.1, xanchor=0.1, ypos=0.5, yanchor=0.5)
+    $pos_right = Position(xpos=0.9, xanchor=0.9, ypos=0.5, yanchor=0.5)
+    show david with dissolve
+    "David hesitated with his answer for a second."
+
+    David "I think I forgot to sign my test"
+
+    "He hurried towards professor Bostan’s cabinet."
+    hide david
+
+    "I frowned at his behavior and followed him back. It was a stupid error to make, especially considering it was a basically a take-home-test. "
+    
+    "But that was also David we were talking about. And David did and said stuff that was anything but normal."
+
+    scene bg receiving_cabinet_dark
+
+    "When I reached the cabinet I was expecting to find him searching for his paper, but what I walked in on was a completely different scene."
+
+    show david at pos_left with dissolve
+    show marius at pos_right with dissolve
+    
+    "David and Marius were standing at an impasse, with all of David’s nervousness and childishness gone."
+
+    "Instead, it was Marius who was looking at anything but his colleague, until his gaze settled on mine and he schooled his expression."
+
+    David "I’m asking you once again. Why did you put the paper in that pile?"
+
+    "I could feel the time ticking, as the time storm brewed. If they got into a conflict now, we would risk not making it out of the premises. I had to step in."
+
+    "I addressed David gently."
+    mc "Hey.It’s fine. You don’t have to be worried. Marius got confused and put it in the wrong folder. It happens."
+    mc "t’s a good thing you noticed. Now let’s find you paper and go home?"
+    mc "Right, Marius?"
+
+    "If only Maria and Ana were here..."
+
+    Marius "Yes, thank you, David, for correcting me."
+
+    "He said it with a small smile, before moving towards the door."
+
+    "However, David completely ignored our words and the moment Marius was within reach, he lunged."
+
+    mc "David, no!"
+
+    "I expected a punch."
+
+    "However, the punch never came, and what David actually reached for, was the paper Marius held in his hand."
+
+    "He snatched it quicker than I thought him capable of, before perusing through it in a hurry."
+
+    "When he finished reading, a horrified expression took the place of his anger."
+
+    David "You’re trying to do what?"
+
+    "Marius went from nervousness to anger in an instant."
+
+    Marius "Give it!"
+    	
+    "He grabbed his paper back while David still looked at him like a fish out of water, placing it back into the pile and taking a strategic position to guard it from being taken again."
+
+    David "Are you mad?"
+
+    "The light haired guy continued despite having had the paper taken."
+
+    David "This is unethical."
+
+    David "I knew you believed in the whole end justifies the means, but this is… this is too much, even for you."
+    "I was even more puzzled than before. What was happening?"
+    "What was more unethical than literally committing crime by trespassing and stealing?"
+    mc "Guys, I’m not catching on."
+    Marius "It’s nothing"
+    Marius "We’ve always had conflicts with Jesus boy because he has some… weirdly placed principles that he applies selectively in his moments of ‘enlightenment."
+
+    David "Selective principles. Selective principles?"
+
+    "David redirected his attention to me, back to angry."
+
+    David "I’m mad, but I’m not stupid. He’s not trying to give his test."
+    David "He’s submitting a signed project proposal for human trial testing of a technology that is still a prototype and hasn’t been tested for safety for humans."
+    "What?"
+
+    "Marius sighed heavily in defeat."
+
+    Marius "Yes, he is right, this is an approved project proposal."
+    Marius "“However, there’s nothing sketchy about it. I’m just submitting it now, because I’ve already had it sent back to me three times as the program chief didn’t like the formatting. The tech is nothing new."
+    Marius "It’s similar to Tesla’s Neuralink, but has been improved a lot by the company I work at. David is overreacting as always."
+
+    David "Liar!"
+
+    Marius "Come on, you’ve seen how David can be. It’s getting late, we should go home already…"
+
+    "I watched as the discussion snowballed back and forth, from one to another to me. Immovable object meets an unstoppable force. They reached an impasse, where one didn’t want to let the other through."
+    
+    "Time kept ticking. I had to pick a side. And I had to do it quickly."
+
+    "But who was telling the truth? David did have his weird moments with his talks about God and destiny, but I’ve never seen him this focused and determined before."
+    "On the other hand, I spent the evening with Marius. I saw him care for the people around him, but I also saw him throw all decency away when in an argument, especially with Maria or David."
+    "Whose side was I supposed to take?"
+
+    hide david with dissolve
+    hide marius with with dissolve
+    menu:
+        "Defend Marius":
+            $ m_affection+= 2
+            jump dealing_with_a_maniac
+        
+        "Defend David":
+            $ d_affection+=2
+            jump dealing_with_a_psychopath
+        
+
+
+
 # show at pos with dissolve
 
