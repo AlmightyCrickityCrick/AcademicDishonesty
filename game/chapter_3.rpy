@@ -1,5 +1,7 @@
 default visited_320 = False
 
+image laptop_Windows_lock = "chapter_3/laptop_Windows_lock.png"
+
 label counting_losses:
     scene bg third_floor_hall_dark
     
@@ -234,7 +236,7 @@ label breaking_into_317:
 
     mc "Can anyone pick a lock?"
 
-    hide door_with_lock:
+    hide door_with_lock
 
     "This wasn’t a James Bond movie, but I did feel kind of like him, considering all the action of today."
 
