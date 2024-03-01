@@ -1,7 +1,7 @@
 default visited_320 = False
 
-label counting_loses:
-    scene bg classroom_101_night_darkened
+label counting_losses:
+    scene bg third_floor_hall_dark
     
     "I took deep breaths as I calmed myself down in the darkness of the hallway."
 
@@ -63,6 +63,12 @@ label double_trouble:
 
     Ana "Do we just look from cabinet to cabinet?"
 
+    scene third_floor_hall_dark
+
+    show paper_with_cabinets_profesors with dissolve:
+        xalign 0.5 
+        yalign 0.5
+
     mc "No need, I saw a list nearby, it’ll show us what we’re looking for."
 
     "I gestured towards one of the walls."
@@ -90,6 +96,7 @@ label double_trouble:
     "I alerted Marius about it, just as a victorious sound came from the side of the girls."
 
     "We looked at each other in confusion, before Maria voiced out the problem."
+    hide paper_with_cabinets_profesors with dissolve
 
     show maria with dissolve
     
@@ -146,6 +153,7 @@ label double_trouble:
     return
 
 label misery_of_a_man:
+    scene bg classroom_310
     "The twins and David followed, swiftly closing the door, just in time for this floor’s guard to cast his shadow under the door."
 
     "It was just a minute later that the light finally turned and, and with it, ironically, extinguished the hopes of catching up with Marius’ friends."
@@ -217,11 +225,16 @@ label crossroads:
             jump almost_420
 
 label breaking_into_317:
+    show door_with_lock:
+        xalign 0.5
+        yalign 0.5
     "When we finally arrived, we were presented with a simple wooden door on which hung a silver plaque with the writing “Receiving cabinet” written on it."
 
     "I tried the handle, but it didn’t work."
 
     mc "Can anyone pick a lock?"
+
+    hide door_with_lock:
 
     "This wasn’t a James Bond movie, but I did feel kind of like him, considering all the action of today."
 
@@ -248,6 +261,8 @@ label breaking_into_317:
     Marius "Me and David will look out for the guard. You guys hurry up and find what we need."
 
     hide marius with dissolve
+
+    scene bg receiving_cabinet_dark
 
     "I nodded and followed the girls inside."
 
@@ -283,15 +298,23 @@ default checks_in_317 = 0
 label desperation_second_name:
     menu:
         "Check the Wardrobe":
+            show open_wardrobe:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
             "I looked inside the wardrobe hoping to find… something? Anything? Whatever I was searching for it wasn’t a pack of japanese cat food."
 
+            hide open_wardrobe
+
             if checks_in_317 < 3:
                 jump desperation_second_name
 
         "Check the Table":
+            show mahogany_Table_With_Papers:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -302,7 +325,7 @@ label desperation_second_name:
             "Finally, a slip of paper with the numbers 32111967 on it found its way into my hands."
 
             "I stopped the search, feeling victorious, until a sliver of doubt slid inside my head. Was it this easy? Was this really the password?"
-
+            hide mahogany_Table_With_Papers
             menu:
                 "Continue Searching":
                     jump desperation_second_name
@@ -310,6 +333,9 @@ label desperation_second_name:
                     "We didn't have enough time. This will have to do."
 
         "Check the Laptop":
+            show laptop_Windows_lock:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -324,6 +350,7 @@ label desperation_second_name:
             "The password for the computer was eight digits. So was the password for the cabinet."
 
             "I jumped at the possibility, but doubt still clouded my mind. Would he actually use the same password?"
+            hide laptop_Windows_lock
             menu:
                 "Continue Searching":
                     jump desperation_second_name
@@ -356,17 +383,23 @@ label desperation_second_name:
 label what_are_we_looking_for:
     menu:
         "Check the Wardrobe":
+            show open_wardrobe:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
             "Because the least obvious place is, apparently, the best place to start, I took a look into the wardrobe."
             "I had hoped for nothing, and yet I was still disappointed in my findings."
             "Ten minutes lost in vain."
-
+            hide open_wardrobe
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
         "Check the Table":
+            show mahogany_Table_With_Papers:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -377,11 +410,14 @@ label what_are_we_looking_for:
             "A slip of paper with the numbers 32111964 on it."
 
             "However, there was no stack of exams."
-
+            hide mahogany_Table_With_Papers
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
         "Check the Laptop":
+            show laptop_Windows_lock:
+                xalign 0.5
+                yalign 0.5
             $ time += 10
             $ checks_in_317 +=1
 
@@ -396,6 +432,7 @@ label what_are_we_looking_for:
             Maria "You do remember that the tests are on paper, right?"
 
             "I pouted, but closed the laptop."
+            hide laptop_Windows_lock
             if checks_in_317 < 3:
                 jump what_are_we_looking_for
 
@@ -435,10 +472,16 @@ label what_are_we_looking_for:
 label almost_420:
     $ visited_320 = True
 
+    scene bg third_floor_hall_light
+
     "As we arrived in front of a metal door with a silver plaque with the writing “Rector cabinet” on it, I knew we hit the jackpot."
 
     "With its lack of doorknob and pincode password pad, it looked more like a safe door, than an entrance to a cabinet. However, if tests and confidential information were kept there, I could understand the need for additional security."
 
+    show metal_door_keypad:
+        xalign 0.5
+        yalign 0.5
+    
     mc "Does anyone know how we could open this?"
 
     "Marius looked pointedly at the twins."
@@ -453,12 +496,15 @@ label almost_420:
     
     "Well that did not sound optimistic."
 
+    hide metal_door_keypad
+
     if full_password:
         jump open_sesame
     else:
         jump attempts_were_made
 
 label open_sesame:
+    scene bg third_floor_hall_light
     "Wait."
 
     "The memory of Professor Bostan introducing the password this morning resurfaced in my mind."
@@ -485,6 +531,8 @@ label access_granted:
     
     "Marius grabbed the edge of the door and pulled it towards himself to show an extremely small room behind it."
 
+    scene bg rector_cabinet_dark
+    
     "It was barely enough to fit two people inside, three if they manage to cram themselves."
 
     Marius "Seems like we’ll have to go by groups."
