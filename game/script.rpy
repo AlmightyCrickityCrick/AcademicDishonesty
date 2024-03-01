@@ -7,5 +7,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump playing_heroics
+    jump chapter_1
     return

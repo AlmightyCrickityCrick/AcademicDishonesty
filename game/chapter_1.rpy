@@ -35,10 +35,15 @@ image chair_map = "chapter_1/chair_with_map.png"
 image teacher_desk = "chapter_1/teacher_desk.png"
 image key = "chapter_1/key.png"
 image fcim_map = "chapter_1/FCIM_map.png"
+image coin = im.Scale("minigame_assets/coin.png", 50, 50)
+image coin_hover = im.Scale("minigame_assets/coin_hover.png", 50, 50)
+image battery = im.Scale("minigame_assets/battery.png", 50, 50)
+image battery_hover = im.Scale("minigame_assets/battery_hover.png", 50, 50)
 
 default m_affection = 0
 default d_affection = 0
-default consumables = 0
+default coins = 0
+default batteries = 0
 default conflict = 0
 default time = 0
 default met_david = False
@@ -48,16 +53,41 @@ default map_found = False
 default left_maria = False
 
 init python:
-    def collect_consumables():
-        globals()['consumables'] += 1
-        renpy.hide_screen("consumables_image")
+    def collect_coin():
+        globals()['coins'] += 1
+        renpy.hide_screen("coin_image")
+        return
+    
+    def collect_battery():
+        globals()['batteries'] += 1
+        renpy.hide_screen("battery_image")
         return
 
     def random_chance():
         return random.randint(1, 6)
 
+
+# TO DO: Change
+screen coin_image(pos_x, pos_y):
+    imagebutton:
+            idle im.Scale("minigame_assets/coin.png", 50, 50)
+            hover im.Scale("minigame_assets/coin_hover.png", 50, 50)
+            xpos pos_x
+            ypos pos_y
+            action Function(collect_coin)
+
+screen battery_image(pos_x, pos_y):
+    imagebutton:
+            idle im.Scale("minigame_assets/battery.png", 50, 50)
+            hover im.Scale("minigame_assets/battery_hover.png", 50, 50)
+            xpos pos_x
+            ypos pos_y
+            action Function(collect_battery)
+
+
 label chapter_1:
     jump breaking_and_entering
+
 
 label breaking_and_entering:
 
@@ -158,7 +188,7 @@ label cabinet_exploration:
                     "As already a symbolic member of the breaking-and-entering community, I decided I was too chicken to commit two crimes in 
                     the same night, so I just studied the outside of the bag."
 
-                    "It wasn’t leather, or any particularly known brand of expensive bags, but it still seemed to have a pretty solid build."
+                    "It wasn't leather, or any particularly known brand of expensive bags, but it still seemed to have a pretty solid build."
 
                     hide dueffel_bag
 
@@ -278,7 +308,12 @@ label cabinet_exploration:
 
 
 label under_desk:
+
     scene bg under_desk_view
+
+    show screen battery_image(0.4, 0.25)
+
+    show screen coin_image(0.75, 0.4)
 
     $map_found = True
 
@@ -354,6 +389,7 @@ label under_desk:
 
     scene bg under_desk_view
 
+
     jump regroup
 
 
@@ -362,6 +398,8 @@ label hidden_closet:
     $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
 
     scene bg keyhole_peer
+
+    show screen battery_image(0.06, 0.7)
 
     "I dove into the nearest closet and glued my eye to its keyhole, just as the door to the classroom opened and a large, brutish man entered, 
     followed by a smaller student."
@@ -379,6 +417,10 @@ label hidden_closet:
     "I whipped my head to the side."
 
     scene bg closet
+
+    show screen battery_image(0.4, 0.25)
+
+    show screen coin_image(0.7, 0.5)
 
     $ met_david = True
 
@@ -540,6 +582,8 @@ label roommates:
     mc "Huh?"
 
     scene bg door_crack
+
+    show screen coin_image(0.29, 0.5)
 
     "I came closer to the opening just as a large, brutish man entered the classroom, followed by a smaller student, but I didn’t pay them any mind, too focused on the door anomaly."
 
@@ -1271,14 +1315,6 @@ label up_we_go:
         "DLC"
     elif PBL:
         jump stairway_to_heaven
-
-
-# TO DO: Change
-screen consumables_image:
-    imagebutton:
-            idle "chapter_1/clock.png"  
-            hover "chapter_1/clock.png"
-            action Function(collect_consumables)
 
 
 label following_dead:
