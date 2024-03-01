@@ -187,3 +187,50 @@ label the_culmination:
     
     if d_affection >= 8:
         jump bad_feelings
+
+label dealing_with_a_maniac:
+    "I reached out towards David, and grabbed his shoulder gently."
+    mc "David, let it be"
+    "I tried to turn him towards the exit"
+    mc "You're not judging clearly right now. We'll go home. Sleep a little. Think about it. And realize you've overreacted."
+
+    "He turned towards me."
+    "This evening I've seen him sad, I've seen him guilty, even hurt. But I've never seen him look betrayed."
+
+    show david
+    David "Sleep a little? Think about it? So you don't believe me?"
+
+    "I winced at his tone "
+
+    mc "I haven't said I don't believe you"
+
+    David "No, that's exactly what you said"
+    David "You think I'm a nut. That I can't see right from wrong. I thought… I thought you were a friend, and yet here you are, taking the side of a liar, of a manipulator, who is going to hurt people in his search for glory."
+
+    mc "David, I…"
+
+    David "You know what? I shouldn't have bothered. I knew you were alike, but I couldn't have imagined that you'd actually take his side on this one."
+    David "There's only one madman in this room… .. and it isn't me."
+
+    "And that's how he left."
+    hide david
+
+    "I sighed heavily, watching the place where he stood before turning to Marius' direction. Well, that did not go well."
+
+    "He shuffled through the room, putting the files back. Before closing the door and joining my side."
+
+    show marius
+    Marius "Sometimes life is unfair. You may take the stance of justice and lose a friend, or defend a friend but lose the justice. Thank you for choosing me."
+
+    mc "Are you sure your project won't hurt anyone?"
+
+    Marius "I promise"
+
+    "But I couldn't help but feel as if I've made a mistake."
+
+    jump end_1
+
+
+
+
+

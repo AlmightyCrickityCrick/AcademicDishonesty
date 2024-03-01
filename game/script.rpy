@@ -9,5 +9,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump last_ditch
+    jump dealing_with_a_maniac
     return
