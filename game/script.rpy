@@ -3,6 +3,8 @@ define mc = Character("Me")
 
 init:
     $ d_affection = 0
+    $ m_affection = 0
+    $ shared_info = False
 
 label start:
 
