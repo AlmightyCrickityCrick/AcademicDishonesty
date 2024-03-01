@@ -10,6 +10,8 @@ image cameraOff = "prolog/camera_off.png"
 
 # The game starts here.
 
+default full_password = False
+
 label prolog:
 
     scene bg mc_room_morning
@@ -272,6 +274,7 @@ label awaiting_fortuna_gift:
     if random_integer < chance_of_password:
         "Something flew before my eyes, distracting me for barely a second."
     else:
+        $ full_password = True
         "19…"
         "…72."
 
