@@ -28,10 +28,19 @@ image around_table = "chapter_1/around_table.png"
 image cock = "chapter_1/clock.png"
 image door = "chapter_1/118_door.png"
 image crad_reader = "chapter_1/card_reader.png"
+image teacher_door = "chapter_1/door_mod.png"
+image open_wardrobe = "chapter_1/open_wardrobe.png"
+image batteries = "chapter_1/batteries.png"
+image chair_map = "chapter_1/chair_with_map.png"
+image teacher_desk = "chapter_1/teacher_desk.png"
+image key = "chapter_1/key.png"
+image fcim_map = "chapter_1/FCIM_map.png"
 
-default affection = 0
+default m_affection = 0
+default d_affection = 0
 default consumables = 0
 default conflict = 0
+default time = 0
 default met_david = False
 default met_marius = False
 default id_found = False
@@ -46,6 +55,9 @@ init python:
 
     def random_chance():
         return random.randint(1, 6)
+
+label chapter_1:
+    jump breaking_and_entering
 
 label breaking_and_entering:
 
@@ -89,7 +101,6 @@ label breaking_and_entering:
     myself the trouble."
 
     menu:
-        # TO DO
         "Leave the Room":
             "Time to put on my big college student pants. If I wanted to find his cabinet, I had to leave this room and actually 
             move through the building to locate it."
@@ -97,7 +108,7 @@ label breaking_and_entering:
             "So, without waiting for another minute, I held my head high, moved my bag to a more comfortable position, and walked 
             straight out of the door."
 
-            "To be added"
+            jump caught_ending
         "Look around":
             jump cabinet_exploration
     
@@ -162,7 +173,7 @@ label cabinet_exploration:
                 
                 "Check Inside":
 
-                    me "Well, it seems like I'm already on the path to crime, might as well commit another one."
+                    mc "Well, it seems like I'm already on the path to crime, might as well commit another one."
 
                     "I gathered some courage, looked around to make sure no one could see me, before slowly unzipping the biggest compartment"
 
@@ -348,7 +359,7 @@ label under_desk:
 
 label hidden_closet:
 
-    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
 
     scene bg keyhole_peer
 
@@ -442,7 +453,7 @@ label hidden_closet:
             menu:
 
                 "Hostile":
-                    $ affection -= 1
+                    $ d_affection -= 1
                     
                     mc "What the hell are you doing here, in a closet, at this hour?"
                     
@@ -470,7 +481,7 @@ label hidden_closet:
                     David "Seems like it..."
                 
                 "Friendly":
-                    $ affection += 1
+                    $ d_affection += 1
 
                     mc "Yeah, I might have embarrassed myself a little today."
 
@@ -559,7 +570,7 @@ label roommates:
     menu:
         "Be rude":
 
-            $ affection -= 1
+            $ m_affection -= 1
 
             mc "What the hell was that? Have you lost your mind? There's a guard on the other side of the door!"
 
@@ -573,7 +584,7 @@ label roommates:
         
         "Keep calm":
 
-            $affection += 1
+            $ m_affection += 1
 
             "Annoyance won't help in this situation."
 
@@ -611,7 +622,7 @@ label regroup:
         jump single_to_mingle
 
     "How were we going to break into Professor Bostan's cabinet?"
-    # TO DO
+    jump schemes_crimes
 
 
 label single_to_mingle:
@@ -983,7 +994,7 @@ label light_group_conflicts:
 
                 "Compliment David":
 
-                    $ affection += 1
+                    $ d_affection += 1
 
                     mc "He does seem pretty nice. And I've seen people a lot more awkward."
 
@@ -1001,7 +1012,7 @@ label light_group_conflicts:
 
                 "Act annoyed":
 
-                    $ affection -= 1
+                    $ d_affection -= 1
 
                     mc "Yeah, yeah!"
 
@@ -1217,8 +1228,8 @@ label up_we_go:
 
         "But I'm voting for the Lobby staircase":
 
-            $ Lobby = True
-            $ PBL = False
+            $ Lobby = False
+            $ PBL = True
         
     show ana at pos with dissolve:
         zoom 0.8
@@ -1257,10 +1268,9 @@ label up_we_go:
     "With only Marius remaining, he sat up and grinned before announcing..."
 
     if Lobby:
-        "Do something"
+        "DLC"
     elif PBL:
-        "Do something"
-    # TO DO
+        jump stairway_to_heaven
 
 
 # TO DO: Change
@@ -1421,7 +1431,9 @@ label peace_duties:
 
     menu:
         "Intervene":
-            $ affection += 1
+            $ d_affection += 1
+
+            $ m_affection += 1
 
             mc "Guys, that's enough"
 
@@ -1551,9 +1563,9 @@ label peace_duties:
 
                     "Leave":
 
-                        "Something"
+                        "DLC. Switching branch"
 
-                        # TO DO: Placating Spirits
+                        jump problem_based_learning
 
             else:
 
@@ -1599,6 +1611,7 @@ label problem_based_learning:
         call complications
 
     jump between_door_place
+
 
 label smooth_sailing:
 
@@ -1666,7 +1679,7 @@ label complications:
 
         "Volunteer to provide distraction":
 
-            $ affection += 1
+            $ m_affection += 1
 
             call playing_heroics
         
@@ -1707,7 +1720,7 @@ label playing_heroics:
 
             "Tutorial time"
 
-            # TO DO: Tutorial
+            # TO DO: tutorial_screen
 
         "Yes":
 
@@ -1839,7 +1852,8 @@ label between_door_place:
 
             hide door
 
-            show card_reader at pos with dissolve
+            show card_reader at pos with dissolve:
+                zoom 0.65
 
             "I searched for a cardlock, and sure enough, just behind the handle was a small crack, just enough to slip in a card… or something of similar shape."
 
@@ -1859,27 +1873,669 @@ label between_door_place:
 
     if id_found:
 
-        "Easy way"
-
-        # TO DO: The Easy Way In
+        jump easy_way_in
     
-    elif left_maria:
+    elif not left_maria:
 
-        "Friends?"
-
-        # To DO: Friends With Benefits?
+        jump friends_with_benifits
     
     else:
 
-        "Impossible"
-
-        # TO DO: Mission Impossible
+        call mission_impossible
     
     return
 
-        
 
-# show at pos with dissolve
+label easy_way_in:
+
+    scene bg pbl_hall
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+
+    "I didn't wait more than a second before pressing the ID  I found into the crack."
+
+    "Voila!"  
+
+    "The door opened and our path was finally obstacle-free."   
+
+    menu:
+        "Enter the door":
+
+            jump mistery_cabinet
+
+
+label friends_with_benifits:
+
+    scene bg pbl_hall
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+
+    show worried_alex at pos with dissolve:
+        zoom 0.8
+
+    Alex "Does anyone have a card or an ID that would let us in?"
+
+    hide worried_alex
+
+    "The negative response was discouraging, to say the least. But just as I was starting to regret spending the time coming this way, 
+    I got rewarded with a last ray of hope."
+
+    show unhappy_maria at pos with dissolve:
+        zoom 0.8
+    
+    Maria "Get out of the way"
+
+    "The voice of someone who hadn't spoken in a while...."
+
+    "Maria!"
+
+    hide unhappy_maria
+
+    "I moved aside as she breezed past me and crouched to look at the lock."
+
+    "She made some highly questionable noises, as she turned her way this way and that, before testing the crack with her nails and pulling 
+    something I couldn't identify out of her sweater."
+
+    "One click..."
+
+    "Two clicks..."
+
+    "And the door was wide, while whatever Maria used went right back under the sleeve of her sweater."
+
+    "Well, this was one way to open doors in life, I guessed."
+
+    menu:
+        "Enter the door":
+
+            jump mistery_cabinet
+
+
+label mission_impossible:
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+    $ teacher_door_pos = Position(xpos=0.02, xanchor=0.1, ypos=0.4, yanchor=0.4)
+
+    scene bg pbl_hall
+
+    show worried_alex at pos with dissolve:
+        zoom 0.8
+
+    Alex "Does anyone have a card or an ID that would let us in?"
+
+    hide worried_alex
+
+    "The negative response was discouraging, to say the least."
+
+    show theodora at pos with dissolve:
+        zoom 0.75
+
+    Theodora "Does anyone know at least if it should be a card or an ID, though?"
+
+    mc "It should be an ID. Pretty sure I remember one of our professors using theirs when we had lessons here."
+
+    hide theodora
+
+    "While we had nothing to open the door with at the moment, there was still an option on the table."
+
+    menu:
+
+        "Improvise":
+
+            mc "We should look around, in case someone forgot one of them around here."
+
+            mc "Start with the other rooms nearby, check the bathrooms or the professor lounge."
+
+            "I got a few sounds of approval and nodded my head. Now, where to start the search?"
+
+            menu:
+
+                "Room 113":
+
+                    $ time += 10
+
+                    scene bg classroom_113
+
+                    "The room was similar to 118, but instead of smaller, rectangular tables, there were big ones, big enough to fit at least 8 people each comfortably."
+
+                    "The walls of the room were covered in whiteboards and two projectors hung from the ceiling. One from the front, another from the behind."
+
+                    "I searched every nook and cranny I could, but I didn't find anything, besides dried markers and some non-drinkable alcohol."
+                
+                "Room 114":
+
+                    $ time += 10
+
+                    scene bg classroom_114
+
+                    "The room was mostly empty of typical educational stuff, having served as something more of a storage for those who held seminars in this section."
+
+                    "Desks strewn around, cowered by cardboards and stray papers was all there was to the room."
+
+                    call heart_with_theodora
+
+                    "I searched as much as I could, but no luck in this room."
+
+                "Room 115":
+
+                    $ time += 10
+
+                    scene bg classroom_115
+
+                    "The room was smaller than the usual PBL room, and the desks were less cooperative and more individualistic."
+
+                    "...looking more like the desks you'd see in a Highschool Musical Movie with just one projector adorning one of the walls."
+
+                    "However, despite it's innocuous appearance, this was the room that kept the hidden gold. There, on one of the desks, lay a forgotten ID."
+
+                    show teacher_id at pos with dissolve:
+                        zoom 0.7
+                    
+                    menu:
+                        "Pick up ID":
+                            
+                            hide teacher_id
+
+                            "Well, well... What do we have here?"
+                    
+                    "I could finally return to the rest."
+
+                    jump easy_way_in
+                
+                "Professor Lounge":
+
+                    scene bg pbl_hall
+
+                    "If it smelled like a bad idea, if it felt like a bad idea, it was a bad idea."
+
+                    "If no one was stupid enough to leave their ID unattended in one of the other rooms, there must have been at least a dozen in there."
+
+                    scene bg pbl_hall
+
+                    show teacher_door at teacher_door_pos with dissolve:
+                        zoom 1.3
+                    
+                    "The professor lounge was, after all, under tight security."
+
+                    "However, with no led blinking in the camera and no indicator that the alarm also worked, I decided that breaking into one more tightly 
+                    secured room was not a problem at this point."
+
+                    "So, I did what any insane person on a mission for academic redemption would do. I pulled the door."
+
+                    hide teacher_door
+
+                    scene bg bad_ending
+
+                    "The moment the door opened wide with a click a blaring noise rang through the room, the hall, the entire building probably."
+
+                    "And I knew. I knew well enough. That I finally pushed my luck too far."
+
+                    return
+    
+    return
+
+
+label mistery_cabinet:
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+    $ wardrobe_pos = Position(xpos=0.5, xanchor=0.5, ypos=0.7, yanchor=0.7)
+
+    scene bg classroom_118
+    
+    "Finally, with the cabinet wide open, we could search for the clue left by Viorel."
+
+    show alex at pos with dissolve:
+        zoom 0.8
+
+    Alex "So, this is it, the jackpot, right?"
+
+    "Alex whistled as he entered the spacious room with several collaborative tables strewn around and two separate isolated working spaces." 
+    
+    "It was indeed the best classroom of the section."
+
+    mc "Yes!"
+
+    mc "Take the isolated spaces and look for anything useful we can find. I'll take the learning space."
+
+    hide alex
+
+    "Now, where to begin?"
+
+    menu:
+
+        "Check the wardrobe":
+
+            $ time += 5
+
+            show open_wardrobe at pos with dissolve:
+                zoom 1.5
+
+            "I didn't know what I was hoping to find there, but I still took a look at the wardrobe in the front of the room."
+
+            "A few coats, some shoes, a forgotten umbrella, and yet nothing of use, except for some batteries. "
+
+        
+            hide open_wardrobe
+
+            show batteries at pos with dissolve:
+                zoom 0.6
+
+            "I didn't know their capacity, but whatever they held, they could prove to be of use in the future."
+
+            menu:
+
+                "Take batteries":
+
+                    hide batteries
+                    
+        "Check the seats":
+
+            $ time += 5
+
+            show chair_map at pos with dissolve
+
+            "I check the seats one by one, hoping not to make my evening worse by touching chewing gum."
+
+            "And yet, among the usual trash, I found a map of the building."
+            
+            Unknown "Viorel, for FCIM anniversary."
+
+            menu:
+
+                "Take the map":
+
+                    hide chair_map
+        
+        "Check the professor table":
+
+            $ time += 5
+
+            show teacher_desk at pos with dissolve
+
+            "I checked the professor's table thoroughly. Looked under the papers strewn across, opened the side drawers and even looking into the marker case."
+
+            hide teacher_desk
+
+            if random_chance() == 5:
+
+                show key at pos with dissolve:
+                    zoom 0.3
+
+                "There, surprisingly, was a key. I looked at it closer and saw that it had 207 written on it. It opens the physics laboratory."
+
+                menu:
+
+                    "Take key":
+
+                        hide key
+        
+    mc "Found a map!"
+
+    "I stopped looking for anything else as I analyzed the map, while the others trickled one by one."
+
+    show fcim_map at pos with dissolve:
+        zoom 0.4
+
+    "Ana drummed her fingers on the table and voiced what we've already noticed."
+
+    mc "So, the cabinet is on the third floor. That should be easy enough to reach."
+    
+    Theodora "Except there's one problem. There's two cabinets"
+
+    Marius "This might complicate things, but at least they're close enough. We'll deal with them when we reach the floor."
+
+    hide fcim_map
+
+    "I looked up, surprised to see him in the room."
+
+    mc "So all that's left is to go up?"
+
+    Marius "Yes. We can only go up from here"
+
+    if left_maria:
+
+            call group_reunion
+    
+    jump stairway_to_heaven
+
+
+label group_reunion:
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+
+    scene bg classroom_118
+
+    "Just as we were preparing to head out of the classroom, we saw the door open and two figures walk in. Maria and David were back."
+
+    "While the light haired guy looked no worse for the wear, the girl looked something between bitter and embarrassed."
+
+    "She didn't say anything to anyone, just approached a confused Marius and stopped, as if waiting for something."
+
+    "Understatement, and then anger flashed quickly on his face, before his expression finally settled on acceptance."
+
+    show marius at pos with dissolve
+    
+    Marius "I'm sorry. For angering you and insulting David"   
+
+    "The smile feels forced..."
+
+    hide marius   
+
+    show unhappy_maria at pos with dissolve :
+        zoom 0.8
+    
+    "Maria either didn't notice or didn't care wherever his words were sincere, I was betting more on the second one, because when she finally 
+    looked at him and opened her mouth to say something."
+
+    Maria "I shouldn't have been rash either."
+
+    hide unhappy_maria
+
+    show serious_david at pos with dissolve :
+        zoom 0.8
+
+    "David looked at her scoldingly."
+
+    hide serious_david
+
+    show unhappy_maria at pos with dissolve :
+        zoom 0.8
+    
+    Maria "Let's not argue anymore… at least until we finish the heist."
+
+    hide unhappy_maria
+
+    "The other people in the room sighed relieved. Seemed like they reached a truce, although a shaky one."
+
+    "David patted her shoulder and looked at Ana, who mouthed something that resembled a “sorry”."
+
+    show david at pos with dissolve :
+        zoom 0.8
+    
+    David "Well, it seems like father was on our side tonight."
+
+    David "We managed to find you here before the Mongols got to you. Are you ready to leave?"
+
+    hide david
+
+    "Before anyone else could answer, Ana came closer to him and agreed."
+
+    show ana at pos with dissolve :
+        zoom 0.6
+
+    Ana "Yep, we were just leaving actually, good timing. Into the front lines you go"
+
+    hide ana
+
+    "She pushed him and Maria ahead before motioning for the others to follow."
+
+    "What was that about?"
+
+    return
+
+            
+label heart_with_theodora:
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+
+    scene bg classroom_114
+
+    "As I was looking through some of the boxes, I heard the door open and close lightly. I turned towards the sound only to see someone unexpected." 
+
+    show theodora at pos with dissolve:
+        zoom 0.8
+    
+    "Theodora."
+
+    "She gave me a nod and came closer, busying herself with looking through the other boxes on the table."
+
+    hide theodora
+
+    "We worked in comfortable silence for a few minutes, until she  stopped, wiped her forehead with the sleeve of her sweater, and turned to me."
+
+    show theodora at pos with dissolve:
+        zoom 0.8
+
+    Theodora "He's not an asshole..."
+
+    mc "What?"
+
+    Theodora "Marius. He might seem like an asshole, but he's not."
+
+    "I blinked. I couldn't understand where she was coming from, but decided to hear her out anyway."
+
+    mc "I wouldn't call him an asshole, but he does seem to be having some issues with David and Maria."
+
+    "She chuckled bitterly."
+
+    Theodora "Issues would be an understatement. Marius and Maria used to date. And now Maria and David do."
+
+    mc "Oh!"
+
+    Theodora "The twins have known David since kindergarten basically and Marius has always worried about him having feelings for her."
+
+    mc "So he got uno-reversed? Got jealous, Maria broke up with him and started dating David."
+
+    "Theodora took some filecases out of her box and answered me absentmindedly, while perusing them."
+
+    Theodora "Yes and no."
+
+    Theodora "Marius got jealous, yes."
+    
+    Theodora "And when he gets jealous, envious, sad, angry, or basically anything besides happy and content, 
+    he usually plunges head first into his work and projects."
+
+    "Well, that was something I could relate to, but I didn't feel like sharing that information with her because I didn't know where she was going."
+
+    Theodora "So, basically, what happened…"
+
+    Theodora "... was that got into his work a little too much and started spending less and less time together."
+
+    Theodora "Maria noticed and started spending more time with David. And then after David got all weird and Marius dared tell her the truth about him, 
+    they broke and she jumped at the nut."
+
+    mc "Well, that was a fun story."
+
+    mc "Unfortunately, I don't understand why you're telling me this."
+
+    "She stopped her search in the box and turned to me fully."
+
+    Theodora "I want you to understand that he's not a bad person. He's not trying to hurt David or argue with Maria for no reason."
+
+    Theodora "They have history behind them that is getting in the way of this heist, so I don't think you should judge him only by his behavior in those circumstances."
+
+    menu:
+
+        "Agree to be understanding":
+
+            $ m_affection += 1
+
+            mc "Alright, I'll try to give him the benefit of doubt."
+
+            "Theo smiled and patted my shoulder, before putting the boxes she searched back in place and leaving."
+            
+            "She stopped a shy away from the doorway."
+
+            Theodora "Thanks. Feel free to hit me or Marius up, if you ever want to grab a coffee together. It'll be our treat."
+
+            "Then stepped over the threshold leaving me alone once more."
+
+        "Argue about her reasoning":
+
+            $ m_affection -= 1
+
+            mc "And that excuses what exactly?"
+
+            mc "I have had nothing to do with Marius and David's history, nor have I asked to be included in it."
+
+            mc "I came here to correct an answer sheet, not get into a lovers' quarrel. Whatever he does or doesn't do in his personal life doesn't concern me."
+
+            "Theodora stopped her perusing of the files and looked at me with wide eyes."
+
+            mc "I don't dump my problems on people I don't know, almost ruin a risky operation, and then ask someone else to motivate my behavior, 
+            because I can't get along with my ex and her new boyfriend."
+
+            mc "If he wants to apologize for acting like a child, when he puts himself into a leadership position, let him come forward on his own. 
+            If he doesn't want to do it, then he shouldn't have bothered."
+
+            "She stayed frozen for a moment longer, ruminating over what I said, before I saw understanding dawn on her."
+
+            Theodora "Alright. It's your call. I didn't come here to play devil's advocate, so feel free to accept or refuse my explanation."
+
+            "Theo patted my shoulder, before putting the boxes she searched back in place and leaving."
+
+            "She stopped a shy away from the doorway."
+
+            Theodora "If you ever feel like giving him a chance to show himself in a different light, you're  free to hit me or Marius up, 
+            if you ever want to grab a coffee together. It'll be our treat."
+
+            "Then stepped over the threshold leaving me alone once more."
+
+    hide theodora
+    
+    return
+
+
+label stairway_to_heaven:
+
+    $ pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.43)
+
+    scene bg classroom_118
+
+    "After checking the outside of the cabinet, we noticed once again the guard patrolling the hallway. We settled on a distraction plan."
+
+    "Alex and Theo would use their flashlights to distract him, while we moved towards the stairs. Then they'd make a circle and catch up with us on the second floor."
+
+    scene bg pbl_hall
+
+    "We walked awkwardly together for a few moments in silence with her brushing her hair behind her ear and back, before she finally looked at me."
+
+    show unhappy_ana at pos with dissolve:
+        zoom 0.8
+
+    Ana "Sorry..."
+
+    Ana "For earlier, I mean. The whole situation was pretty childish considering the position we're in right now. Moreover, ..."
+
+    menu:
+
+        "Accept apology":
+
+            mc "It's fine. I accept your apology."
+
+            "Let's smile to be more friendly!"
+
+            mc "“It's not like we were in deep hate waters anyway, so it might be a bit much to start throwing monologues about it. No nobles killed. No wars started."
+
+            hide unhappy_ana
+
+            show ana at pos with dissolve:
+                zoom 0.6
+
+            "She gave me a grateful smile before switching the topics."
+
+            hide ana
+        
+        "Deny appology":
+
+            "I put up my hand to stop her."
+
+            mc "You do understand that it's not your place to apologize?"
+            
+            "She looked at me like I was stupid. I'm not stupid."
+
+            mc "We're all running on nerves. It's fine. Conflicts rise and then calm. Once we all get home we'll forget all about it. 
+            So no apologies about anything for today."
+
+            "I continued and she gave me another weird look, before she composed herself, cleaned her throat, and decided to let it go."
+
+            hide unhappy ana
+
+    "We stayed another few minutes in silence, watching the others, sans Alex, whisper among themselves, before Ana raised her voice once again."
+
+    show unhappy_ana at pos with dissolve:
+        zoom 0.8
+    
+    Ana "I noticed that you're pretty good with numbers"
+
+    "After tonight I apparently still had it in me to feel embarrassed."
+
+    mc "I've been a bit of a history nerd since highschool."
+
+    mc "Though, remembering numbers came easier to me than remembering people. So I compensated my not knowing who commanded what battle by remembering 
+    the date that it happened."
+
+    "A small smile appeared on her face, before being wiped away by a distant sadness."
+
+    Ana "You're pretty similar to David, to be honest. He is also a bit of a nut for history. You should try speaking with him a bit more."
+
+    "Yeah, nut was a pretty good word for that guy. In both good and bad ways."
+
+    "Ana must have read something in my expression, because she chastised me."
+
+    Ana "Don't underestimate him. He's a smart guy."
+
+    Ana "Maria and I have known him since childhood. He's extremely smart, although a bit awkward with strangers."
+
+    mc "A bit is an understatement."
+
+    "She pinched my arm."
+
+    Ana "He's just been under a lot of stress since the pandemic started."
+
+    Ana "First the preparations for the baccalaureate exam, then failing his TOEFL 3 times…"
+
+    mc "... that's rough, buddy."
+
+    Ana "... then he fell sick and was in a coma for like three days where he dreamed that he was Jesus' brother and his mission was to bring peace on earth."
+
+    "Wait, what? I stopped in the middle of a step, as did she."
+
+    Ana "Yeah. That's why he enrolled in biotech. He's been a bit weird this past year, I guess, but his heart is in the right place."
+
+    mc "Yeah. That's why he enrolled in biotech. He's been a bit weird this past year, I guess, but his heart is in the right place."
+
+    "Ana shook her head."
+
+    Ana "It's fine. He spoke to one. She said it's not hurtful."
+
+    Ana "Just a coping mechanism that will pass when the stress lessens and life goes back to normal."
+
+    Ana "It's actually been going a lot better lately and if it keeps up, he'll probably start resorting to it less and less until it just stops."
+
+    Ana "So, could I ask you to give him a chance? I'm sure you'll find a lot in common. Or at least don't treat him like a freak circus. Please?"
+
+    "I thought about what she was asking for..."
+
+    menu:
+
+        "Agree to try":
+
+            $ d_affection += 1
+
+            mc "Alright. I'll try my best not to act like Marius then."
+
+            "She scoffed at the comparison, but nodded her head as thanks, just as we reached the second floor."
+
+        "Refuse":
+
+            $ d_affection -= 1
+
+            "I felt uncomfortable under her hopeful gaze."
+
+            mc "I'm sorry, but that's a lot to ask."
+
+            mc "He's not a kid and neither am I. You're trying to convince me to befriend him like we're on the first day of kindergarten."
+
+            mc "I barely know you. I can't promise that. I'm sorry."
+
+            Ana "It's fine, I understand..."
+
+            "She turned to look at her friend and sister just as we reached the second floor, but her voice sounded heartbroken."
+
+    hide unhappy_ana
+
+    jump chapter2
+
 
 
 
