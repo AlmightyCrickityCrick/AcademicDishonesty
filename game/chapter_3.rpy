@@ -9,9 +9,11 @@ label counting_loses:
 
     "Someone... David, whispered to my left"
 
-    #TODO: Show David
+    show david with dissolve
 
     mc "Me"
+
+    hide david with dissolve
 
     "I answered back with the same tone, throat parched after the sprint."
     "Then, others followed. I counted only three other voices. "
@@ -20,11 +22,13 @@ label counting_loses:
     "I felt a node in my throat."
     "Alex and Theo were still down there."
 
-    #TODO: Show David
+    show david with dissolve
 
     "David must have also realized the loss"
 
     David "Should we turn back?"
+
+    hide david with dissolve
 
     #TODO: Show Ana, Maria Marius
     
@@ -67,9 +71,13 @@ label double_trouble:
 
     "And indeed, on two different papers were noted the cabinets, the professors and the hours within which they could be found there. The only thing left was to search for the right one."
 
+    show marius with dissolve
+    
     Marius "We’ll take the left one, you look it up on the one to the right."
 
     Marius "David, stand on guard duty."
+
+    hide marius with dissolve
 
     "The girls and David nodded in understanding."
 
@@ -80,10 +88,14 @@ label double_trouble:
     " Finally, under 117 stood the name we were searching for." 
 
     "I alerted Marius about it, just as a victorious sound came from the side of the girls."
-    
+
     "We looked at each other in confusion, before Maria voiced out the problem."
 
+    show maria with dissolve
+    
     Maria "He's in cabinet 220."
+
+    hide maria with dissolve
 
     "Marius made his way over to their list and frowned."
 
@@ -91,19 +103,30 @@ label double_trouble:
 
     "It was Ana’s turn to move to the left and check out our list."
 
+    show maria with dissolve
+
     Maria "No, it’s written here that he’s in 220."
 
     "But the adrenaline was starting to wear off, and I had trouble understanding what she was saying."
 
     "How could a cabinet be in two places at the same time?"
+    show maria with dissolve
+    show marius with dissolve
 
     Marius "It seems like it indeed is."
+    hide marius with dissolve
 
     "Ana went from our list, to theirs a couple of times, as Maria gave Marius a puzzled look."
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
 
     Ana "Mari."
 
     Ana "There’s two rooms." 
+
+    hide ana with dissolve
 
     "oh"
     "OH"
@@ -113,7 +136,10 @@ label double_trouble:
 
     mc "So there’s two cabinets that we have to search now?"
 
+    show marius with dissolve
     Marius "Yes"
+
+    hide marius with dissolve
     
     "It seems like our last lap till victory just turned into two."
 
@@ -130,6 +156,8 @@ label misery_of_a_man:
     
     mc "I’m sorry."
 
+    show marius with dissolve
+
     "I didn’t specify what for, but we both knew what I meant."
 
     "He just nodded and took a gulp."
@@ -142,15 +170,25 @@ label misery_of_a_man:
 
     "This was it. The final act in our drama."
 
+    hide marius with dissolve
+
     return
 
 label crossroads:
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+
     Ana "So,"
 
     "We made our way towards the last two places that we had to search for our answer sheets. Thankfully, they weren’t far apart. "
 
     Ana "Which cabinet should we look into first? 317 or 320?"
+    hide ana with dissolve
+    show marius with dissolve
 
+    
     "Marius murmured something I couldn’t understand and looked at me."
 
     Marius "You’ve been giving pretty good advice till now, you pick."
@@ -160,6 +198,7 @@ label crossroads:
     "That was a lot of responsibility to give to someone he barely knew."
 
     "But then again, hadn’t he also agreed with most of my other suggestions, till now?"
+    hide marius with dissolve
 
     menu:
         "Pick 317":
@@ -188,6 +227,8 @@ label breaking_into_317:
 
     "As usual, one of the twins stepped up to put their questionable knowledge to good use."
 
+    show maria with dissolve
+
     "Maria looked at the lock, tried the handle a few times, before taking out a bobby pin out of her hair and bending it. With this strange contraption, she proceeded to poke the keyhole."
 
     Marius "You do know that breaking the lock would raise suspicions, right?"
@@ -196,11 +237,17 @@ label breaking_into_317:
 
     "This was further demonstrated by the fact that she for once didn’t get mad at him, just shushed the tall guy with a dirty look, before continuing her work."
 
+    hide maria with dissolve
+    
     "Less than a minute later, the door was open and we were free to look around."
 
     #TODO: Reciving Cabinet
 
+    show marius with dissolve
+
     Marius "Me and David will look out for the guard. You guys hurry up and find what we need."
+
+    hide marius with dissolve
 
     "I nodded and followed the girls inside."
 
@@ -208,6 +255,11 @@ label breaking_into_317:
 
     "Well, this was going to be fun."
     mc "Where do we start?"
+
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
 
     Ana "Wardrobe, laptop, table… Just check anything that might seem possible."
 
@@ -218,6 +270,8 @@ label breaking_into_317:
     Maria "Well, then get to it. The more time we spend speaking, the less time we have left for searching."
 
     "I sighed and looked at my surroundings."
+
+    hide ana with dissolve
 
     if visited_320:
         jump desperation_second_name
@@ -279,6 +333,11 @@ label desperation_second_name:
 
     mc "Guys, I might have found what we needed."
 
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+    
     Ana "Are you sure? The number of inputs might be limited."
 
     menu:
@@ -287,6 +346,8 @@ label desperation_second_name:
         "Tell the truth":
             "I’m not sure, but having a clue is already better than nothing."
     
+    hide ana with dissolve
+
     "Let’s go back."
 
     jump access_granted
@@ -328,9 +389,9 @@ label what_are_we_looking_for:
 
             "Unfortunately for him, I was stupid enough to break into the university, so I was also stupid enough to look into other people’s computers."
 
-            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."\
+            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."
 
-            " I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
+            "I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
 
             Maria "You do remember that the tests are on paper, right?"
 
@@ -340,11 +401,27 @@ label what_are_we_looking_for:
 
     mc "Well, I found nothing."
     "I heard Maria let out a frustrated huff, before flopping dramatically on the couch."
+    
+    show maria with dissolve
+
     Maria "It's not here"
 
+    hide maria with dissolve
+    
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+    
     Ana "Are you sure? We haven’t looked everywhere yet."
 
+    hide ana with dissolve
+
+    show maria with dissolve
+
     Maria "I’m negatively positive."
+
+    hide maria with dissolve
 
     "Ana's shoulders dropped."
 
@@ -358,5 +435,125 @@ label what_are_we_looking_for:
 label almost_420:
     $ visited_320 = True
 
+    "As we arrived in front of a metal door with a silver plaque with the writing “Rector cabinet” on it, I knew we hit the jackpot."
 
+    "With its lack of doorknob and pincode password pad, it looked more like a safe door, than an entrance to a cabinet. However, if tests and confidential information were kept there, I could understand the need for additional security."
+
+    mc "Does anyone know how we could open this?"
+
+    "Marius looked pointedly at the twins."
+
+    show maria with dissolve
     
+    "Maria came closer and looked at the lock for a few moments."
+
+    Maria "All I can tell is that the password is eight characters and that it’ll more than likely alert the entire city, if we try to break it or introduce the incorrect password one too many times."
+
+    hide maria with dissolve
+    
+    "Well that did not sound optimistic."
+
+    if full_password:
+        jump open_sesame
+    else:
+        jump attempts_were_made
+
+label open_sesame:
+    "Wait."
+
+    "The memory of Professor Bostan introducing the password this morning resurfaced in my mind."
+
+    "If that password had 8 characters, and this one also did, what was the probability that he would reuse the same password?"
+
+    "I frowned. Maria did say ‘one too many times’, not ‘one time’, right?"
+
+    "I decided to take the chance."
+
+    menu: 
+        "Input Password":
+            jump access_granted
+
+
+label access_granted:
+    "I felt my hands shake a little, as I approached the numpad under the stares of my teammates. It was now or never. I introduced, carefully, one by one, the numbers as I remembered."
+
+    "32… 11… 1967."
+
+    "I took a deep breath, as I pressed the OK, expecting the worst, when the door let out a bip and opened itself."
+
+    show marius with dissolve
+    
+    "Marius grabbed the edge of the door and pulled it towards himself to show an extremely small room behind it."
+
+    "It was barely enough to fit two people inside, three if they manage to cram themselves."
+
+    Marius "Seems like we’ll have to go by groups."
+
+    hide marius with dissolve
+    
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+
+    Ana "How about me, Maria and David go together and you go with our little genius."
+    
+    Ana "We’ll go first and search for the papers, while you stay on the lookout?"
+
+    hide ana with dissolve
+
+    show marius with dissolve
+    
+    Marius "It’s an idea. We should probably leave separately though."
+
+    Marius "There’s bigger risks of getting caught if we just go out as a team. You think you could distract the guard after you’re done here and leave by yourselves?"
+
+    hide marius with dissolve
+
+    show sad_david with dissolve
+    
+    "David frowned at his proposal, but Ana quickly agreed."
+
+    hide sad_david with dissolve
+    show ana with dissolve:
+        xpos 300
+        ypos 120
+        zoom 0.7
+    
+    Ana "Sure thing. Just remember not to stay too late. They raise the electric fence at 12."
+
+    hide ana with dissolve
+    
+    "Marius nodded, mimicking her smile, and motioned for us to leave."
+
+    jump patrolling_together
+
+label attempts_were_made:
+    "I looked at the numpad and picked at the bed of my thumb. It was 8 characters long. There were 100 million possible combinations. And just a few possible tries. How should we go about this?"
+
+    menu:
+        "Try to find clues in the other cabinet":
+            show david with dissolve
+            mc "Guys, it’s too risky. We can’t stay and fiddle with the pad until we guess."
+            David "He’s right."
+            "It was surprisingly David who shared my opinion."
+            David "There’s too many combinations and we don’t actually know how the door will react to a wrong one."
+            "I nodded."
+            mc "We should go back to the other cabinet. See if there’s any clue that could help us at least narrow it down."
+            hide david with dissolve
+            "The others considered the information, before agreeing to backtrack."
+            jump breaking_into_317
+        "Try to guess":
+            "Eight numbers, eight numbers… What could they be?"
+            "It could be the date of someone’s birth. An encoding or encryption of a word. Maybe the date of some event?"
+            "As I was thinking about a possible combination, the memory of professor Bostan putting in his laptop password flashed through my mind."
+            "I stood up straighter. I haven’t seen it entirely, but I was pretty sure it had eight digits. I wondered wherever professor Bostan would reuse it."
+            "It went 32, 11… I stopped my train of thought. What could there be missing? 3211..64. What were the missing digits?"
+            python:
+                numbers = renpy.input("What could be the number?").strip()
+            
+            if numbers == "19":
+                jump access_granted
+            else:
+                jump finita_la_comedia
+
