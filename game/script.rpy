@@ -7,5 +7,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump lights_out
+    jump chapter_1
     return

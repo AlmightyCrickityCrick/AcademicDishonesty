@@ -441,6 +441,63 @@ screen ending_screen(condition):
                 xalign 0.5
                 action Jump("minigame")
 
+label tutorial_screen:
+    mc "Nope, no idea. But I’m young, smart, bold and all that cool stuff that Mr Bostan usually says during his lectures, so it shouldn’t be too hard to figure it out."
+    "Theodora came closer and took out a flashlight from her back, before starting a brief explanation."
+
+    show theodora at right with dissolve
+
+    Theodora "Okay. I’ll repeat this only once so you better note it down somewhere."
+
+    show flashlight at pos with dissolve:
+        zoom 0.7
+
+    "She clicked the button of her flashlight and hit it with her palm a few times before it started up."
+
+    Theodora "Distraction is usually done in pairs. One on one position in the corridor or classroom, the other in another."
+
+    Theodora "What you’ll be doing is attracting the guard towards you with the light, away from your partner and from the direction we are heading in."
+
+    "She turned her flashlight once briefly. Then twice, before explaining further."
+
+    Theodora "You flash the light once to attract the attention of the guard."
+
+    Theodora "Flash twice, if the guard is close enough to you and you need your partner to start attracting the guard’s attention, so you can change positions, then wait for the double flash from your partner to start the process over."
+
+    Theodora "And that’s basically it."
+
+    "I watched her play with the light once more before she dumped it back into her back and went to check the door with Alex."
+                                
+    hide flashlight with fade
+
+    hide theodora
+
+    show ana at pos_left:
+        zoom 0.55 
+    
+    Ana "Be wary of the guards."
+
+    Ana "If you hear only his keys, then it’s safe to flash and move."
+
+    Ana "But be careful what direction they are headed when moving, so he doesn’t see you do it. If you hear his steps, he is pretty close. "
+
+    Ana "Do not move and try not to flash.  Flashing is risky, so either crouch and hope for the best, or do it only if you need to signal your partner."
+    Ana " If you hear his hums, don't move, dont flash, don't even breathe."
+    Ana "He’s right next to you."
+
+    "I blinked."
+
+    mc "How do you know this?"
+
+    "She only smiled secretively, and joined the others."
+
+    hide ana
+
+    "I looked at Marius, who seemed amused by my expression, and pointed in her direction, still dumbfounded."
+
+    "He decided not to answer my silent question."
+
+    return
         
 
 
