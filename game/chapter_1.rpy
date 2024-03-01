@@ -30,6 +30,8 @@ image door = "chapter_1/118_door.png"
 image crad_reader = "chapter_1/card_reader.png"
 
 default affection = 0
+default d_affection = 0
+default m_affection = 0
 default consumables = 0
 default conflict = 0
 default met_david = False
@@ -442,7 +444,7 @@ label hidden_closet:
             menu:
 
                 "Hostile":
-                    $ affection -= 1
+                    $ d_affection -= 1
                     
                     mc "What the hell are you doing here, in a closet, at this hour?"
                     
@@ -470,7 +472,7 @@ label hidden_closet:
                     David "Seems like it..."
                 
                 "Friendly":
-                    $ affection += 1
+                    $ d_affection += 1
 
                     mc "Yeah, I might have embarrassed myself a little today."
 
@@ -559,7 +561,7 @@ label roommates:
     menu:
         "Be rude":
 
-            $ affection -= 1
+            $ m_affection -= 1
 
             mc "What the hell was that? Have you lost your mind? There's a guard on the other side of the door!"
 
@@ -573,7 +575,7 @@ label roommates:
         
         "Keep calm":
 
-            $affection += 1
+            $ m_affection += 1
 
             "Annoyance won't help in this situation."
 
@@ -604,11 +606,11 @@ label regroup:
     "I froze as people streamed into the room, some speaking quietly, others on the verge of arguing. Four in total, but judging by their attitude, they were not a single group."
 
     if met_david:
-        jump david_and_friends
+        call david_and_friends
     elif met_marius:
-        jump marius_and_friends
+        call marius_and_friends
     else:
-        jump single_to_mingle
+        call single_to_mingle
 
     "How were we going to break into Professor Bostan's cabinet?"
     # TO DO
@@ -983,7 +985,7 @@ label light_group_conflicts:
 
                 "Compliment David":
 
-                    $ affection += 1
+                    $ d_affection += 1
 
                     mc "He does seem pretty nice. And I've seen people a lot more awkward."
 
@@ -1001,7 +1003,7 @@ label light_group_conflicts:
 
                 "Act annoyed":
 
-                    $ affection -= 1
+                    $ d_affection -= 1
 
                     mc "Yeah, yeah!"
 
@@ -1421,7 +1423,8 @@ label peace_duties:
 
     menu:
         "Intervene":
-            $ affection += 1
+            $ d_affection += 1
+            $ m_affection += 1
 
             mc "Guys, that's enough"
 
@@ -1666,7 +1669,7 @@ label complications:
 
         "Volunteer to provide distraction":
 
-            $ affection += 1
+            $ m_affection += 1
 
             call playing_heroics
         
@@ -1727,7 +1730,7 @@ label playing_heroics:
 
     hide amused_marius
 
-    # TO DO: Flashlight Minigame
+    call minigame()
 
     scene bg hall_first_floor
 
