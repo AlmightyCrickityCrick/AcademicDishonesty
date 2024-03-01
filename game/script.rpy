@@ -7,5 +7,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump attempts_were_made
+    jump last_ditch
     return

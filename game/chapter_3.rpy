@@ -49,6 +49,7 @@ label counting_loses:
     jump crossroads
     return
 
+
 label double_trouble:
     "My eyes widened as I saw what looked like a list of cabinets and their professors from the corner of my eye, but just as I wanted to make it public, Marius dragged me by my arm into a nearby cabinet."
 
@@ -145,6 +146,7 @@ label double_trouble:
 
     return
 
+
 label misery_of_a_man:
     "The twins and David followed, swiftly closing the door, just in time for this floor’s guard to cast his shadow under the door."
 
@@ -173,6 +175,7 @@ label misery_of_a_man:
     hide marius with dissolve
 
     return
+
 
 label crossroads:
     show ana with dissolve:
@@ -215,6 +218,7 @@ label crossroads:
             Marius "Well, lead the way."
 
             jump almost_420
+
 
 label breaking_into_317:
     "When we finally arrived, we were presented with a simple wooden door on which hung a silver plaque with the writing “Receiving cabinet” written on it."
@@ -278,7 +282,9 @@ label breaking_into_317:
     else:
         jump what_are_we_looking_for
 
+
 default checks_in_317 = 0
+
 
 label desperation_second_name:
     menu:
@@ -430,8 +436,6 @@ label what_are_we_looking_for:
     jump almost_420
 
 
-
-
 label almost_420:
     $ visited_320 = True
 
@@ -556,4 +560,97 @@ label attempts_were_made:
                 jump access_granted
             else:
                 jump finita_la_comedia
+
+label last_ditch:
+
+    scene bg rector_cabinet_dark
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+
+    if time >= 50:
+        
+            "I was ready to lunge after the paper if Marius wasn't giving it to me, when the sound of a phone rang through the air."
+
+            "David stopped his glaring at Marius, in exchange for glaring at his phone."
+
+            "He cursed as he stopped what was actually a reminder, while me and Marius didn't dare take our eyes off each other."
+
+            "David looked between us two, then at the clock, then at us two again."
+
+            "I furrowed my brow in confusion as I saw with the edge of my vision how his face morphed from anger, to frustration, only to stop at hopelessness. "
+
+            "Understanding flashed across Marius' face before he grinned."
+
+            show amused_marius at pos with dissolve
+
+            Marius "That was the last call"
+
+            Marius "We either drop this discussion behind and leave the premises. Or we fight for a paper and remain blocked here for the rest of the night."
+
+            hide amused_marius
+
+            "I could feel my blood boiling with rage. This was unfair. A criminal in exchange for all the work we've done, all the sweat we put into it. Everything for naught."
+
+            "I feel the anger fester in me as David coaxes me to leave. I feel it pool through my veins as we watch Marius grow smaller and smaller."
+
+            "But at the core of this rage was not hatred, but helplessness."
+
+            "The fates hated me and they liked to give reminders of it by taunting me with the sweet wrapper of success covering behind itself the  bitterness of failure"
+
+            jump end_2
+    
+    else:
+
+            "I lunged at Marius the moment I saw an opening."
+
+            "He grabbed the paper and moved quickly out of the way, going around the room, until there was professor Bostan's table between us."
+
+            show smiling_marius at pos with dissolve
+
+            Marius "I suggest you be careful, so the other works don't end up in the air."
+
+            hide smiling_marius
+
+            "I went to the left, trying to catch him, but he repeated my movement."
+
+            "I moved to the right and he did the same."
+
+            "I thought about whether I'll manage to get to him in time if I decided to ruin the operation by jumping over the table"
+
+            "But before I could actually do anything, Marius put a hand over his eyes, a shining point clearly visible in the middle of his palm."
+
+            "I turned my head and caught David making good use of the lantern in my bag."
+
+            "I turned my head to one side to signal him to move in my position, while I went around the table and towards Marius."
+
+            "Hearing my steps from one side, he hurried to escape through the other, but David managed to grab his paper just before he made it through 
+            the door, scrunched it and threw it to me"
+
+            "Just as Marius recovered his vision, he noticed its absence, but it was too late."
+
+            "The paper was in my hands, our positions were reversed and I watched as his previous playfulness morphed back into anger."
+
+            mc "Any last words to your friend?"
+
+            "I asked him, fluttering the paper, but didn't give him a minute to respond, before I tore it into small pieces."
+
+            show amused_marius at pos with dissolve
+
+            Marius "Did you even understand what you just did?"
+
+            "I looked at the person who I, despite the brief acquaintance, considered a friend and felt the rift grow. It might heal at a later point, or it might never heal."
+
+            "I knew that from his perspective I just ruined months of work. However, from my perspective, I did the right thing."
+
+            mc "I became a monster in your eyes, so I can stop you from becoming a monster in the eyes of others"
+
+            hide amused_marius
+
+            if m_affection > 7:
+                jump end_3
+            else:
+                jump reprimand_ending
+
+
+# show at pos with dissolve
 
