@@ -328,9 +328,9 @@ label what_are_we_looking_for:
 
             "Unfortunately for him, I was stupid enough to break into the university, so I was also stupid enough to look into other people’s computers."
 
-            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."\
+            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."
 
-            " I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
+            "I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
 
             Maria "You do remember that the tests are on paper, right?"
 

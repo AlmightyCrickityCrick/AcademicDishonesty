@@ -66,8 +66,6 @@ init python:
     def random_chance():
         return random.randint(1, 6)
 
-
-# TO DO: Change
 screen coin_image(pos_x, pos_y):
     imagebutton:
             idle im.Scale("minigame_assets/coin.png", 50, 50)
@@ -418,9 +416,9 @@ label hidden_closet:
 
     scene bg closet
 
-    show screen battery_image(0.4, 0.25)
+    show screen battery_image(0.25, 0.007)
 
-    show screen coin_image(0.7, 0.5)
+    show screen coin_image(0.69, 0.54)
 
     $ met_david = True
 
@@ -982,6 +980,10 @@ label light_group_conflicts:
 
     scene bg classroom_101_night
 
+    show screen battery_image(0.2, 0.75)
+
+    show screen coin_image(0.95, 0.4)
+
     "He returned back, looking almost guilty."
 
     show sad_david at pos with dissolve
@@ -1208,6 +1210,10 @@ label schemes_crimes:
 label up_we_go:
 
     scene bg classroom_101_night
+
+    show screen battery_image(0.77, 0.63)
+
+    show screen coin_image(0.17, 0.44)
 
     $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
 
