@@ -811,7 +811,7 @@ label bad_feelings:
     menu:
         "Defend Marius":
             $ m_affection+= 2
-            jump dealing_maniac
+            jump dealing_with_a_maniac
         
         "Defend David":
             $ d_affection+=2

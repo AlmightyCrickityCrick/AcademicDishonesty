@@ -18,6 +18,8 @@ label caught_ending:
     scene bg bad_ending
 
     "Here, my game is over..."
+    $ MainMenu(confirm=False)()
+
 
 label finita_la_comedia:
     "Just as I introduced the password, the room filled with a deafening sound. I felt myself panic, but I couldn’t move."
@@ -31,6 +33,8 @@ label finita_la_comedia:
     scene bg bad_ending
 
     "And I knew that I was past the point of suspension."
+    $ MainMenu(confirm=False)()
+
 
 label end_1:
 
@@ -45,6 +49,8 @@ label end_1:
     "However, for the rest of the world, and even some of my partners in crime..."
 
     "...that day never existed, leaving both the characters that played pivotal roles in this drama, as well as their lives and secrets, shrouded in shadow."
+    $ MainMenu(confirm=False)()
+
 
 label end_2:
 
@@ -90,6 +96,8 @@ label end_2:
 
             "But I am nothing but a coward." 
             "And even as it burns me from the inside out, I'm still too scared to ever tell another soul about my sins."
+    $ MainMenu(confirm=False)()
+
 
 label end_3:
 
@@ -105,6 +113,8 @@ label end_3:
     "Since that day, lots of things have changed, some friends having remained as a shadow in my memory, while others continued to thrive like succulents in the desert."
 
     "Would I have changed something, if I knew how’d it turn out? Probably. But what I would never give up, would be the deserved justice."
+    $ MainMenu(confirm=False)()
+
 
 label reprimand_ending:
 
@@ -129,4 +139,6 @@ label reprimand_ending:
     scene bg bad_ending
 
     "He had snitched on all of us."
+    $ MainMenu(confirm=False)()
+
 
