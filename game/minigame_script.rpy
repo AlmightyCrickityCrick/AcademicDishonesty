@@ -102,8 +102,8 @@ init python:
     class GuardSprite(renpy.Displayable):
         def __init__(self, **properties):
             super(GuardSprite, self).__init__(**properties)
-            self.xpos = 500
-            self.ypos = 200
+            self.xpos = 800
+            self.ypos = 400
             self.xdir =  None
             self.ydir = None
 
@@ -231,7 +231,7 @@ init python:
                 self.object_sprites.append(Image(x[0]))
             
             self.guard = GuardSprite()
-            self.mc = PlayableSprite("main", 500, 200)
+            self.mc = PlayableSprite("main", 20, 200)
             self.companion = PlayableSprite("companion", 20, 700)
             self.finish_line = Image("minigame_assets/destination.png")
             self.star_sprite = Image("minigame_assets/star.png")
@@ -368,20 +368,36 @@ init python:
         #TODO: Need some proper level design for this thing because random sucks
         def object_reset(self):
             object_img = ["minigame_assets/plant.png", "minigame_assets/trashcan.png", "minigame_assets/sofa.png", "minigame_assets/vending_machine.png"]
-            self.object_locations = []
+            self.object_locations = [
+                ("minigame_assets/vending_machine.png", 300, 200),
+                ("minigame_assets/sofa.png", 500, 250),
+                ("minigame_assets/vending_machine.png", 1200, 200),
+                ("minigame_assets/plant.png", 1350, 200),
+
+                ("minigame_assets/sofa.png", 400, 500),
+                ("minigame_assets/plant.png", 700, 450),
+                ("minigame_assets/sofa.png", 1200, 550),
+
+                ("minigame_assets/vending_machine.png", 450, 770),
+                ("minigame_assets/trashcan.png", 650, 800),
+                ("minigame_assets/trashcan.png", 1300, 800),
+                ]
             xpositions = list(range(70, self.render_size[0] - 200 , 50))
             ypositions = list(range(200, self.render_size[1] - 200, 50))
             globals() ['object_borders'] = []
 
+            for ob in self.object_locations:
+                object_borders.append((ob[1] - 70, ob[2] - 200, ob[1] + 70, ob[2]))
+
             #Sets objects around the room
-            while len(self.object_locations) < 10:
-                new_space =  (random.choice(xpositions), random.choice(ypositions))
-                xpositions.remove(new_space[0])
-                ypositions.remove(new_space[1])
-                self.object_locations.append((random.choice(object_img), new_space[0], new_space[1]))
-                #Adds the current object's borders to a list
-                object_borders.append((new_space[0] - 70, new_space[1] - 200, new_space[0] + 70, new_space[1]))
-                print(len(object_borders), len(self.object_locations))
+            # while len(self.object_locations) < 10:
+            #     new_space =  (random.choice(xpositions), random.choice(ypositions))
+            #     xpositions.remove(new_space[0])
+            #     ypositions.remove(new_space[1])
+            #     self.object_locations.append((random.choice(object_img), new_space[0], new_space[1]))
+            #     #Adds the current object's borders to a list
+            #     object_borders.append((new_space[0] - 70, new_space[1] - 200, new_space[0] + 70, new_space[1]))
+            #     print(len(object_borders), len(self.object_locations))
 
             #Sets the 3 stars around the room
             self.star_locations = {}
