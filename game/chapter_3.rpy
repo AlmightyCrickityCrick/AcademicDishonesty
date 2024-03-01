@@ -1,5 +1,7 @@
 default visited_320 = False
 
+default info_shared = False
+
 image laptop_Windows_lock = "chapter_3/laptop_Windows_lock.png"
 
 label counting_losses:
@@ -582,6 +584,7 @@ label access_granted:
 
     jump patrolling_together
 
+
 label attempts_were_made:
     "I looked at the numpad and picked at the bed of my thumb. It was 8 characters long. There were 100 million possible combinations. And just a few possible tries. How should we go about this?"
 
@@ -610,6 +613,7 @@ label attempts_were_made:
                 jump access_granted
             else:
                 jump finita_la_comedia
+
 
 label last_ditch:
 
@@ -760,7 +764,7 @@ label bad_feelings:
     "Marius went from nervousness to anger in an instant."
 
     Marius "Give it!"
-    	
+    
     "He grabbed his paper back while David still looked at him like a fish out of water, placing it back into the pile and taking a strategic position to guard it from being taken again."
 
     David "Are you mad?"
@@ -803,18 +807,102 @@ label bad_feelings:
     "Whose side was I supposed to take?"
 
     hide david with dissolve
-    hide marius with with dissolve
+    hide marius with dissolve
     menu:
         "Defend Marius":
             $ m_affection+= 2
-            jump dealing_with_a_maniac
+            jump dealing_maniac
         
         "Defend David":
             $ d_affection+=2
-            jump dealing_with_a_psychopath
+            jump dealing_psyho
         
 
 
+
+label dealing_psyho:
+
+    scene bg rector_cabinet_dark
+
+    $pos = Position(xpos=0.5, xanchor=0.5, ypos=0.5, yanchor=0.5)
+
+    "I let out a heavy sigh. I couldn't believe what I was going to say."
+
+    show serious_david at pos with dissolve
+
+    mc "David, I'm going to ask you this once and only once and I want you to answer truthfully, 
+    not from the perspective of a brother of Jesus, nor from the perspective of the chosen one."
+
+    mc "As a student of this university, with domain knowledge about this specific subject, are you completely 
+    sure that what Marius is trying to propose will put other people in danger?"
+
+    David "Yes."
+
+    "Well, then… I turned to Marius."
+
+    hide serious_david
+
+    show marius at pos with dissolve
+
+    mc "Give this paper here."
+
+    "I extended my hand and adopted the same tone of voice as David."
+
+    hide marius
+
+    show surprised_david at pos with dissolve
+
+    "The light haired turned around to look at me with eyes the size of saucers, as if he didn't think I'd actually take his side."
+
+    hide surprised_david
+
+    show amused_marius at pos with dissolve
+
+    "Marius, on the other hand, made an almost hysterical laugh."
+
+    Marius "So, when having to choose between the arguments between a normal person and a nut, you.d rather believe the nut."
+
+    "Is he serious?"
+
+    mc "If he were a nut he wouldn't have been admitted to this specialty, and neither would he have had people vouch for him."
+
+    mc "Now give me the papers, while we can still solve this peacefully and be friends, Marius."
+
+    "I moved my hand once again to emphasize the point."
+
+    if shared_info:
+
+        Marius "And here I thought, you'd understand me."
+
+        Marius "What about pushing the boundaries of the impossible? What about doing everything you can for the sake of progress? To help those who came after us?"
+
+        "I felt bile rise as I heard him throw my own words at me so nonchalantly. I thought he was a dreamer, not a madman. That wasn't the meaning of my words and he knew it."
+    
+        mc "Giving a life for many is still a sacrifice too steep to be paid."
+
+        Marius "But that's the price of progress."
+
+        Marius "All that was built, all that is considered helpful now was obtained through blood."
+
+        mc "That's a reason to change how it's done and not continue making the same mistakes"
+    
+    else:
+
+        Marius "And here I thought, you'd understand me."
+
+        Marius "That you'd get that to save numerous lives, you'd have to take a few first."
+
+        mc "Giving a life for many is still a sacrifice too steep to be paid."
+
+        Marius "But that's the price of progress"
+
+        Marius "All that was built, all that is considered helpful now was obtained through blood."
+
+        mc "That's a reason to change how it's done and not continue making the same mistakes."
+
+    hide amused_marius
+
+    jump last_ditch
 
 # show at pos with dissolve
 
