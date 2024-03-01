@@ -200,20 +200,22 @@ label arriving_to_the_exam:
     "anything…"
     "that I could do to pass."
 
-    show viorel with dissolve
+    show bostan at center with dissolve:
+        ypos 900
     Bostan "Thank you for coming today."
     Bostan "As you've all probably noticed from your tech acting up, 
     we've been dealing with anomalous magnetic storms worldwide this week, Republic of Moldova included"
     Bostan  "With this occasion, I've been cordially invited to attend an international summit…"
-    hide viorel with dissolve
+    hide bostan with dissolve
 
     "I could try and copy the answers from one of my colleagues"
     "Stefan would usually sit in front of me and he seemed to be pretty good at this class."
 
-    show viorel with dissolve
+    show bostan at center with dissolve:
+        ypos 900
     Bostan "... I apologize for changing the exam dates…"
     Bostan "But I believe you've had all semester to learn, so a few days wouldn't change the results too much..."
-    hide viorel with dissolve
+    hide bostan with dissolve
 
     "But as I took a close look at my colleagues to find him, I realized that there were more of us than usual."
     "A lot more."
@@ -222,11 +224,12 @@ label arriving_to_the_exam:
     "My hands started to tremble as more people filtered in and took their seats." 
     "This wasn't looking good."
 
-    show viorel with dissolve
+    show bostan at center with dissolve:
+        ypos 900
     Bostan "... However, considering that the 65th anniversary of FCIM is approaching"
     Bostan "I would be willing to give additional points to those of you who would be able to prepare a game about our university."
     Bostan "Let me show you an example."
-    hide viorel with dissolve
+    hide bostan with dissolve
 
     "I raised my head towards the whiteboard like a deer caught in the highlights just as professor Bostan started approaching his laptop."
     "A distant memory of him spoiling the answers to a quiz while showing his screen last month flashed before my eyes."
@@ -241,14 +244,14 @@ label arriving_to_the_exam:
             $ row = 1
             $ chance_of_password = 0.83
 
-            jump awaiting_fortuna_gift
+            call awaiting_fortuna_gift
         "Sit in the second row":
             "I bolted towards the second row under the questioning gazes of my peers, but I didn't pay them any heed,
             taking the last available seat just as he reached it."
             $ row = 2
             $ chance_of_password = 0.33
 
-            jump awaiting_fortuna_gift
+            call awaiting_fortuna_gift
 
     jump no_more_dream
 
@@ -292,6 +295,8 @@ label awaiting_fortuna_gift:
     "Game over."
 
     hide inky with dissolve
+
+    return
 
 label no_more_dream:
     "I didn't listen to anything around me, my sight focused on the spot that could have been my last saving grace,
@@ -338,5 +343,7 @@ label no_more_dream:
     "Even if I had to break into his cabinet in the middle of the night to do it."
     
     hide bg hall_first_floor with fade
+
+    jump breaking_and_entering
 
     return
