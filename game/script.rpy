@@ -7,5 +7,5 @@ init:
 label start:
 
     # jump arriving_to_the_exam
-    jump stealing_or_saving
+    jump high_way_to_hell
     return

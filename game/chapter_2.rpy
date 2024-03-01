@@ -30,26 +30,13 @@ label high_way_to_hell:
 
     "We had a split of a second to make a decision, before our journey and academic carrier were suspended indefinitely."
 
-    $ key = False #TODO should be removed
+    $ key = True #TODO should be removed
     menu:
         "Hide in FAFcab":
             jump privileges_used_for_evil
         "Hide in physics lab" if key == True:
             jump a_different_kind_of_lab
     jump scatter
-
-label privileges_used_for_evil:
-    "I dove towards the FAFcab, taking out the key out of my pocket, for once grateful not to have it on a ring, and turned the lock open."
-
-    scene bg fafcab room night
-
-    "In less than a moment we were all huddled on the opposite side of the door, breathing heavily, and listening to the guard whistle a tune."
-
-    jump from_bad_to_worse
-    jump bad_situations_require_bad_solutions
-
-label a_different_kind_of_lab:
-    "asdfsgbg"
 
 label from_bad_to_worse:
     "We waited for the sound to get quieter, but as it came closer and closer and then stopped, we looked at each other in abject horror."
@@ -108,6 +95,148 @@ label from_bad_to_worse:
     Theodora "David, no offense, but we can't exactly walk from room to room to distract him, and that's kind of needed in this situation."
     hide theodora with dissolve
 
+    return
+
+
+label privileges_used_for_evil:
+    "I dove towards the FAFcab, taking out the key out of my pocket, for once grateful not to have it on a ring, and turned the lock open."
+
+    scene bg fafcab room night
+
+    "In less than a moment we were all huddled on the opposite side of the door, breathing heavily, and listening to the guard whistle a tune."
+
+    jump from_bad_to_worse
+    jump bad_situations_require_bad_solutions
+
+
+label a_different_kind_of_lab:
+    "I dove towards the physics laboratory, taking out the key out of my pocket found in 118, and turned the lock open."
+    "In less than a moment we were all huddled on the opposite side of the door, breathing heavily, and listening to the guard whistle a tune."
+
+    scene bg laboratory
+
+    call from_bad_to_worse
+
+    menu:
+        "Try a different type of distraction":
+            mc "But what if we didn't have to walk around?"
+            "Everyone turned in my direction."
+            "Some of them wore puzzled faces, while others had an eyebrow raised in curiosity."
+
+            show marius
+            "Marius was the one who asked first."
+            Marius "Explain"
+            hide marius
+
+            mc "We're in the physics lab right now."
+            mc "Right next door is the FAFcab."
+            mc "It's got really useful stuff in it, like anime posters, a couch, a router, but most important…"
+            mc "there's a bluetooth stereo."
+
+            show maria
+            "Maria jumped at the possibility."
+            Maria "Is it on batteries or…?"
+            hide maria
+
+            mc "It's on batteries, but we usually keep it plugged in, so as long as there's power, it should work."
+
+            show ana with dissolve:
+                xpos 300
+                ypos 120
+                zoom 0.7
+            Ana "Then we'll have to send someone to turn it on"
+            "Ana brightened, before her shoulders dropped."
+            Ana "We can't go through the door, though… He's literally next to it."
+            hide ana
+
+            "I frowned."
+            "We couldn't really be locked though?"
+            "There should be other options of movement besides the main hallway?"
+            "It's not like we could get locked inside. There had to be some doors, maybe holes in the wall, or some…"
+
+            "It took me a second to remember the time Vasile left his phone in a locked cabinet."
+
+            mc "Guys, we can use another method."
+            mc "I once had a colleague who forgot his phone in the nearby cabinet "
+            mc "I traversed the room under their questioning gaze and got up on one of the tables" 
+            mc "There's a small ledge under the windows, if you're careful enough, you can use it to move from one cabinet to the others."
+
+            show marius
+            "Marius came over to confirm my words for himself."
+            Marius " Oh. I never noticed."
+            "He frowned again."
+            Marius "It's extremely narrow, though. There's barely any room for a foot.”"
+            hide marius
+
+            show david
+            "David came closer, took a look at the ledge, thought for a few seconds, before determination crossed his face."
+            David "I can go. I've had to walk in smaller spaces, it won't be a problem."
+            "He looked at me."
+            David "Do you have any rope or something else I could use?"
+            # hide david
+
+            menu:
+                "Hand the rope":
+                    show rope at center
+                    mc "Here"
+                    "I put a coil in his hand, and he started wrapping it around the metal bar next to the window"
+                    mc "Be careful not to fall there."
+                    hide rope
+
+                    David "Thanks, but I'm kinda favored by God, so you shouldn't worry"
+                    "He laughed and I started to question the decision of letting him go through this"
+                    David "So, how will we do this?” He turned to Marius for indications."
+                    hide david
+
+                    "Marius seemed to forget their rivalry for a second and focused on making sure the rope was tied well enough, before he busied himself with opening the window."
+
+                    show marius
+                    Marius "You go there, find the stereo, press the button and come back."
+                    "He turned to me for a second."
+                    Marius "Where's the stereo?"
+                    
+
+                    mc "Up on the left wardrobe. It's white, you'll find it."
+
+                    "Marius turned back to David and repeated my words."
+                    Marius "Up on the left wardrobe. It's white, you'll find it."
+                    hide marius
+
+                    "That was an extremely stupid exchange."
+
+                    show david
+                    David "Alright then"
+                    David "I'll drop in. Turn it on. Drop out."
+                    hide david
+
+                    "“Kinda like my father,” I heard someone whisper in the back."
+
+                    show marius
+                    "Marius covered his laughter with a cough."
+                    Marius "Well, good luck comrade." 
+                    "He gave David a nod, before the slippered man, helped by Maria, got onto the table, out of the window, and out of sight, leaving us waiting for his return."
+                    hide marius
+
+                    "Two minutes turned into five, which turned into 10, before a familiar notification appeared on my phone about connecting to a new bluetooth device."
+
+                    "Ten more minutes and our friend was right back where he started, looking prouder of himself than ever."
+
+                    mc "Good job" 
+                    "I told him, as he unraveled the rope from around himself and handed it back. I took it from him and joined the others by the exit door."
+
+                    "I quietly counted to three before pressing the button to connect to the stereo. Then, selecting the most annoying song on my playlist I could, I sealed the plan."
+
+                    "We watched as the silhouette of the guard jumped and then promptly moved in the direction of FAFcab. We gaped the door slightly, hoping he would follow through and enter."
+
+                    "Sometimes Murphy's law didn't work, I celebrated, because for once everything was going as it should. This was probably the easiest way we'd gotten out of a hunch."
+
+                    "Or at least it would have been if the lights didn't turn off, just as we stepped foot into the hallway."
+
+                    jump light_out
+        "Find an alternative way to move around":
+            jump bad_situations_require_bad_solutions
+    return
+
 label bad_situations_require_bad_solutions:
     "I frowned."
     "We couldn't really be locked though?"
@@ -146,6 +275,7 @@ label bad_situations_require_bad_solutions:
             jump dangerous_maneuvre
         "Hide in physics lab" if phone == True:
             jump stealing_or_saving
+    return
         
 label dangerous_maneuvre:
     show rope at center with dissolve
@@ -256,6 +386,8 @@ label dangerous_maneuvre:
             "We were almost celebrating our victory when the lights went out."
 
             jump lights_out
+    
+    return
 
 label stealing_or_saving:
     "I rummaged through my bag to find the rope that I brought from home, when my hand stumbled upon a slick brick of unfamiliar shape."
@@ -350,3 +482,5 @@ label stealing_or_saving:
 
     "Feeling victorious, we rushed out of the cabinet, towards the stairs, when the unexpected happened. The lights turned off."
     jump lights_out
+    
+    return
