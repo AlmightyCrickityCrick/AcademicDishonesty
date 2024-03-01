@@ -19,6 +19,19 @@ label caught_ending:
 
     "Here, my game is over..."
 
+label finita_la_comedia:
+    "Just as I introduced the password, the room filled with a deafening sound. I felt myself panic, but I couldn’t move."
+
+    "What have I done?"
+
+    "We were so close, just a little further. I turned towards my partners in crime to apologize, but instead of looking at me they were looking backwards."
+
+    "There stood the security guard, looking angrier than the waters of the Pacific in spring."
+
+    scene bg bad_ending
+
+    "And I knew that I was past the point of suspension."
+
 label end_1:
 
     scene bg exam_auditorium

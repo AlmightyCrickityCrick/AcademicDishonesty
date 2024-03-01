@@ -328,9 +328,9 @@ label what_are_we_looking_for:
 
             "Unfortunately for him, I was stupid enough to break into the university, so I was also stupid enough to look into other people’s computers."
 
-            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."\
+            "I cracked the lid open and was met with the password screen. I tried remembering the digits I saw him introduce in the morning. After a few wrong tries, the screen showed the clue “FCIM anniversary”."
 
-            " I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
+            "I grinned like a madman, because I felt like a hacker from the movies once I was finally in."
 
             Maria "You do remember that the tests are on paper, right?"
 
@@ -357,6 +357,99 @@ label what_are_we_looking_for:
 
 label almost_420:
     $ visited_320 = True
+
+    "As we arrived in front of a metal door with a silver plaque with the writing “Rector cabinet” on it, I knew we hit the jackpot."
+
+    "With its lack of doorknob and pincode password pad, it looked more like a safe door, than an entrance to a cabinet. However, if tests and confidential information were kept there, I could understand the need for additional security."
+
+    mc "Does anyone know how we could open this?"
+
+    "Marius looked pointedly at the twins."
+
+    "Maria came closer and looked at the lock for a few moments."
+
+    Maria "All I can tell is that the password is eight characters and that it’ll more than likely alert the entire city, if we try to break it or introduce the incorrect password one too many times."
+
+    "Well that did not sound optimistic."
+
+    if full_password:
+        jump open_sesame
+    else:
+        jump attempts_were_made
+
+label open_sesame:
+    "Wait."
+
+    "The memory of Professor Bostan introducing the password this morning resurfaced in my mind."
+
+    "If that password had 8 characters, and this one also did, what was the probability that he would reuse the same password?"
+
+    "I frowned. Maria did say ‘one too many times’, not ‘one time’, right?"
+
+    "I decided to take the chance."
+
+    menu: 
+        "Input Password":
+            jump access_granted
+
+
+label access_granted:
+    "I felt my hands shake a little, as I approached the numpad under the stares of my teammates. It was now or never. I introduced, carefully, one by one, the numbers as I remembered."
+
+    "32… 11… 1967."
+
+    "I took a deep breath, as I pressed the OK, expecting the worst, when the door let out a bip and opened itself."
+
+    "Marius grabbed the edge of the door and pulled it towards himself to show an extremely small room behind it."
+
+    "It was barely enough to fit two people inside, three if they manage to cram themselves."
+
+    Marius "Seems like we’ll have to go by groups."
+
+    Ana "How about me, Maria and David go together and you go with our little genius."
+    
+    Ana "We’ll go first and search for the papers, while you stay on the lookout?"
+
+    Marius "It’s an idea. We should probably leave separately though."
+
+    Marius "There’s bigger risks of getting caught if we just go out as a team. You think you could distract the guard after you’re done here and leave by yourselves?"
+
+    "David frowned at his proposal, but Ana quickly agreed."
+
+    Ana "Sure thing. Just remember not to stay too late. They raise the electric fence at 12."
+
+    "Marius nodded, mimicking her smile, and motioned for us to leave."
+
+    jump patrolling_together
+
+label attempts_were_made:
+    "I looked at the numpad and picked at the bed of my thumb. It was 8 characters long. There were 100 million possible combinations. And just a few possible tries. How should we go about this?"
+
+    menu:
+        "Try to find clues in the other cabinet":
+            mc "Guys, it’s too risky. We can’t stay and fiddle with the pad until we guess."
+            David "He’s right."
+            "It was surprisingly David who shared my opinion."
+            David "There’s too many combinations and we don’t actually know how the door will react to a wrong one."
+            "I nodded."
+            mc "We should go back to the other cabinet. See if there’s any clue that could help us at least narrow it down."
+
+            "The others considered the information, before agreeing to backtrack."
+            jump breaking_into_317
+        "Try to guess":
+            "Eight numbers, eight numbers… What could they be?"
+            "It could be the date of someone’s birth. An encoding or encryption of a word. Maybe the date of some event?"
+            "As I was thinking about a possible combination, the memory of professor Bostan putting in his laptop password flashed through my mind."
+            "I stood up straighter. I haven’t seen it entirely, but I was pretty sure it had eight digits. I wondered wherever professor Bostan would reuse it."
+            "It went 32, 11… I stopped my train of thought. What could there be missing? 3211..64. What were the missing digits?"
+            python:
+                numbers = renpy.input("What could be the number?").strip()
+            
+            if numbers == "19":
+                jump access_granted
+            else:
+                jump finita_la_comedia
+
 
 
     
