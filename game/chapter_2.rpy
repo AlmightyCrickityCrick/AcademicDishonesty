@@ -36,7 +36,6 @@ label high_way_to_hell:
             jump privileges_used_for_evil
         "Hide in physics lab" if key == True:
             jump a_different_kind_of_lab
-    jump scatter
 
 label from_bad_to_worse:
     "We waited for the sound to get quieter, but as it came closer and closer and then stopped, we looked at each other in abject horror."
@@ -104,7 +103,7 @@ label privileges_used_for_evil:
 
     "In less than a moment we were all huddled on the opposite side of the door, breathing heavily, and listening to the guard whistle a tune."
 
-    jump from_bad_to_worse
+    call from_bad_to_worse
     jump bad_situations_require_bad_solutions
 
 label a_different_kind_of_lab:
@@ -320,7 +319,7 @@ label dangerous_maneuvre:
 
             menu:
                 "No (see tutorial)":
-                    jump tutorial_screen
+                    call tutorial_screen
                 "Yes (skip tutorial)":
                     mc "Yes, it's fine. We'll be back before you say Chebyshev,"
 
@@ -337,7 +336,7 @@ label dangerous_maneuvre:
             "I listened to the guard's whistle, until it got quiet and his keys started giggling."
             "After his steps were gone, I immediately set out for my position."
 
-            jump minigame
+            call minigame
 
             if _return:
                 "Feeling victorious, we rushed out of the cabinet, towards the stairs, when the unexpected happened. The lights turned off."
